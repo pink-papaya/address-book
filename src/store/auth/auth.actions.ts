@@ -2,13 +2,13 @@ import { ActionTree } from 'vuex';
 import { RootState } from '@/store/types';
 import { AuthState } from '@/store/auth/types';
 import router from '@/router';
+import addressBookService from '@/services/addressBook.service';
 
 export default {
-  login: async ({ commit, dispatch }, firebaseAuthUser) => {
-    const usersService = { getUser() {} };
-    const user = await usersService.getUser();
+  login: async ({ commit, dispatch }, { username, password }) => {
+    const addressBook = await addressBookService.login(username, password);
 
-    commit('setUser', user);
+    commit('setUser', addressBook);
     dispatch('products/getUserProducts', null, { root: true });
   },
 
