@@ -5,14 +5,18 @@ import router from '@/router';
 import addressBookService from '@/services/addressBook.service';
 
 export default {
-  login: async ({ commit, dispatch }, { username, password }) => {
+  register({ commit, dispatch }, { username, password }) {
+    return addressBookService.create(username, password);
+  },
+
+  async login({ commit, dispatch }, { username, password }) {
     const addressBook = await addressBookService.login(username, password);
 
     commit('setUser', addressBook);
     dispatch('products/getUserProducts', null, { root: true });
   },
 
-  logout: ({ commit }) => {
+  logout({ commit }) {
     commit('setUser', null);
     commit('products/setProducts', null, { root: true });
 

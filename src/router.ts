@@ -44,11 +44,18 @@ const router = new Router({
       component: () =>
         import(/* webpackChunkName: "signup" */ '@/views/SignUp.vue'),
     },
+    {
+      path: '*',
+      redirect: '/',
+    },
   ],
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !store.getters['auth/isUserLoggedIn']) {
+  if (
+    to.matched.some(route => route.meta.requiresAuth) &&
+    !store.getters['auth/isUserLoggedIn']
+  ) {
     const path = !store.getters['auth/isUserLoggedIn']
       ? '/login'
       : '/check-login';

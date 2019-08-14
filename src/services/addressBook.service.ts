@@ -2,8 +2,14 @@ import api from '@/http/api';
 import { AddressBook } from '@/services/types';
 
 class AddressBookService {
-  public create(username: string, password: string): Promise<{}> {
-    return api.post('create', { username, password });
+  public async create(username: string, password: string): Promise<{}> {
+    const addressBooks = await this.getAll();
+
+    if (addressBooks.find(book => book.username === username)) {
+      throw new Error('Username already exists');
+    }
+
+    return api.post('/', { username, password });
   }
 
   public getAll(): Promise<AddressBook[]> {

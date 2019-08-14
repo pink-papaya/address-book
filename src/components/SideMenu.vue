@@ -1,6 +1,14 @@
 <template>
   <div>
     <nav :class="{ 'side-menu--visible': isSideMenuOpen }" class="side-menu">
+      <div
+        class="md:hidden flex flex-col justify-center items-center border-b-2 pb-5"
+      >
+        <span class="font-medium text-gray-900">Username</span>
+        <button class="mx-5 font-bold text-purple-900" @click="logout">
+          Logout
+        </button>
+      </div>
       <div class="flex flex-1 flex-col">
         Groups
       </div>
@@ -22,7 +30,10 @@ export default Vue.extend({
 
   computed: mapState('app', ['isSideMenuOpen']),
 
-  methods: mapActions('app', ['toggleSideMenu']),
+  methods: {
+    ...mapActions('app', ['toggleSideMenu']),
+    ...mapActions('auth', ['logout']),
+  },
 });
 </script>
 

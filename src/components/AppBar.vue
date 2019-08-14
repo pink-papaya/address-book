@@ -6,22 +6,31 @@
       <font-awesome-icon icon="bars" />
     </div>
 
-    <div class="font-bold text-3xl text-left md:max-w-xs md:flex-1">
+    <div class="font-bold text-3xl text-left md:max-w-xs md:w-full">
       <font-awesome-icon icon="address-book" />
       <span class="hidden md:inline">&nbsp;Address Book</span>
     </div>
 
-    <div class="mx-5 relative flex-1 max-w-2xl">
-      <input
-        type="search"
-        name="search"
-        class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 pr-4 pl-10 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
-      />
-      <div
-        class="pointer-events-auto md:pointer-events-none absolute inset-y-0 left-0 pl-4 flex items-center"
-      >
-        <font-awesome-icon icon="search" />
+    <div class="mx-5 relative flex-1">
+      <div class="w-full max-w-2xl">
+        <input
+          type="search"
+          name="search"
+          class="app-bar__search bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 pr-4 pl-10 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
+        />
+        <div
+          class="pointer-events-auto md:pointer-events-none absolute inset-y-0 left-0 pl-4 flex items-center"
+        >
+          <font-awesome-icon icon="search" />
+        </div>
       </div>
+    </div>
+
+    <div class="hidden md:block">
+      <span class="font-medium text-gray-900">Username</span>
+      <button class="mx-5 font-bold text-purple-900" @click="logout">
+        Logout
+      </button>
     </div>
   </header>
 </template>
@@ -33,8 +42,15 @@ import { mapActions } from 'vuex';
 export default Vue.extend({
   name: 'AppBar',
 
-  methods: mapActions('app', ['toggleSideMenu']),
+  methods: {
+    ...mapActions('app', ['toggleSideMenu']),
+    ...mapActions('auth', ['logout']),
+  },
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.app-bar__search {
+  transition: all 0.25s;
+}
+</style>

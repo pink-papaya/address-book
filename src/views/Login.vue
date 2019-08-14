@@ -1,19 +1,29 @@
 <template>
   <login-layout>
-    <form class="w-full max-w-sm">
+    <form class="w-full max-w-sm" @submit.prevent="login">
       <div class="mb-6">
         <label class="login__label" for="username">
           Username
         </label>
-        <input id="username" type="text" class="login__input" />
+        <input
+          id="username"
+          v-model="username"
+          type="text"
+          class="login__input"
+        />
       </div>
       <div class="mb-6">
         <label class="login__label" for="password">
           Password
         </label>
-        <input id="password" type="password" class="login__input" />
+        <input
+          id="password"
+          v-model="password"
+          type="password"
+          class="login__input"
+        />
       </div>
-      <button class="login__button" type="button">
+      <button class="login__button" type="submit">
         Log In
       </button>
       <div class="mt-6 text-gray-700">
@@ -37,6 +47,24 @@ export default Vue.extend({
   name: 'Login',
 
   components: { LoginLayout },
+
+  data() {
+    return {
+      username: '',
+      password: '',
+    };
+  },
+
+  methods: {
+    async login() {
+      await this.$store.dispatch('auth/login', {
+        username: this.username,
+        password: this.password,
+      });
+
+      this.$router.push('/');
+    },
+  },
 });
 </script>
 

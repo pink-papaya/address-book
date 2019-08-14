@@ -1,15 +1,5 @@
-export interface Group {
-  id: string;
-  name: string;
-  description: string;
-}
-
-export interface Contact {
-  groupId: string;
-  name: string;
-  phone: string;
-  pictureUrl: string;
-}
+import { Contact } from '@/store/contacts/types';
+import { Group } from '@/store/groups/types';
 
 export interface AddressBook {
   id: string;

@@ -3,6 +3,7 @@ import Vuex, { StoreOptions } from 'vuex';
 import { RootState } from './types';
 import app from './app';
 import auth from './auth';
+import groups from './groups';
 
 Vue.use(Vuex);
 
@@ -11,6 +12,7 @@ const store: StoreOptions<RootState> = {
   modules: {
     app,
     auth,
+    groups,
   },
 };
 
