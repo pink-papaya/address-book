@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-<!--    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />-->
+    <!--    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />-->
 
     <div>
       <div v-for="group in groups" :key="group.id">
