@@ -1,6 +1,7 @@
 import { ActionTree } from 'vuex';
 import { RootState } from '@/store/types';
-import { GroupsState } from '@/store/groups/types';
+import { Group, GroupsState } from '@/store/groups/types';
+import db from '@/db';
 
 export default {
   add({ commit }, group = { name: 'name' }) {
@@ -15,5 +16,15 @@ export default {
         group: newGroup,
       });
     }, 1000);
+  },
+
+  async storeGroups({ commit }, groups: Group[]) {
+    commit('storeGroups', groups);
+
+    const tx = (await db).transaction('groups', 'readwrite');
+    groups.forEach(group => {
+      tx.store.put(group);
+    });
+    await tx.done;
   },
 } as ActionTree<GroupsState, RootState>;

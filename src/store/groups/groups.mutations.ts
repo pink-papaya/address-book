@@ -3,6 +3,15 @@ import { MutationTree } from 'vuex';
 import { Group, GroupsState } from '@/store/groups/types';
 
 export default {
+  storeGroups(state, groups: Group[]) {
+    state.groups = groups.reduce(
+      (acc, group) => {
+        acc[group.id] = group;
+        return acc;
+      },
+      {} as { [key: string]: Group },
+    );
+  },
   addGroup(state, group: Group) {
     Vue.set(state.groups, group.id, group);
   },

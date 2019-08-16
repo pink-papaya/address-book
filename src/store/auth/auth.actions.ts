@@ -4,6 +4,8 @@ import { AuthState } from '@/store/auth/types';
 import router from '@/router';
 import addressBookService from '@/services/addressBook.service';
 
+const sessionKey = 'address-book-session';
+
 export default {
   register({ commit, dispatch }, { username, password }) {
     return addressBookService.create(username, password);
@@ -12,17 +14,17 @@ export default {
   async login({ commit, dispatch }, { username, password }) {
     const addressBook = await addressBookService.login(username, password);
 
-    commit('setUser', addressBook);
-    dispatch('products/getUserProducts', null, { root: true });
+    commit('setUser', addressBook.id);
+
+    localStorage.setItem(sessionKey, addressBook.id);
+    dispatch('contacts/storeContacts', addressBook.contacts, { root: true });
+    dispatch('groups/storeGroups', addressBook.groups, { root: true });
   },
 
   logout({ commit }) {
     commit('setUser', null);
-    commit('products/setProducts', null, { root: true });
+    localStorage.removeItem(sessionKey);
 
-    const currentRouter = router.app.$route;
-    if (!(currentRouter.meta && currentRouter.meta.authNotRequired)) {
-      router.push('/login');
-    }
+    router.push('/login');
   },
 } as ActionTree<AuthState, RootState>;

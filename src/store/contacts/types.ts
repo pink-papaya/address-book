@@ -2,7 +2,7 @@ export interface Contact {
   groupId: string;
   name: string;
   phone: string;
-  pictureUrl: string;
+  pictureUrl?: string;
 }
 
 export interface ContactsState {
