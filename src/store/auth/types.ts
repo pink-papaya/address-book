@@ -1,8 +1,8 @@
-interface User {
+export interface AddressBookSession {
   username: string;
   addressBookId: number;
 }
 
 export interface AuthState {
-  user?: User;
+  addressBook?: AddressBookSession;
 }

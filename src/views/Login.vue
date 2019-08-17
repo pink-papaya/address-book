@@ -28,10 +28,7 @@
       </button>
       <div class="mt-6 text-gray-700">
         Don't have an account?
-        <router-link
-          class="text-purple-900 hover:text-purple-800 hover:text-underline"
-          to="/register"
-        >
+        <router-link class="login__link" to="/signup">
           Sign Up here
         </router-link>
       </div>

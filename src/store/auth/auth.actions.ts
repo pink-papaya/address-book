@@ -14,17 +14,33 @@ export default {
   async login({ commit, dispatch }, { username, password }) {
     const addressBook = await addressBookService.login(username, password);
 
-    commit('setUser', addressBook.id);
+    const session = {
+      id: addressBook.id,
+      username: addressBook.username,
+    };
 
-    localStorage.setItem(sessionKey, addressBook.id);
+    commit('setSession', session);
+
+    localStorage.setItem(sessionKey, JSON.stringify(addressBook.id));
     dispatch('contacts/storeContacts', addressBook.contacts, { root: true });
     dispatch('groups/storeGroups', addressBook.groups, { root: true });
   },
 
   logout({ commit }) {
-    commit('setUser', null);
+    commit('setSession', null);
     localStorage.removeItem(sessionKey);
 
     router.push('/login');
+  },
+
+  init: {
+    root: true,
+    handler({ commit }) {
+      const session = JSON.parse(localStorage.getItem(sessionKey) || 'null');
+
+      if (session) {
+        commit('setSession', session);
+      }
+    },
   },
 } as ActionTree<AuthState, RootState>;

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { MutationTree } from 'vuex';
-import { Group, GroupsState } from '@/store/groups/types';
+import { Group, GroupMap, GroupsState } from '@/store/groups/types';
 
 export default {
   storeGroups(state, groups: Group[]) {
@@ -9,7 +9,7 @@ export default {
         acc[group.id] = group;
         return acc;
       },
-      {} as { [key: string]: Group },
+      {} as GroupMap,
     );
   },
   addGroup(state, group: Group) {
@@ -21,5 +21,8 @@ export default {
   },
   deleteGroup(state, group: Group) {
     Vue.delete(state.groups, group.id);
+  },
+  setLoading(state, value: boolean) {
+    state.isLoading = value;
   },
 } as MutationTree<GroupsState>;

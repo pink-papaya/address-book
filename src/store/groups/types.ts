@@ -4,6 +4,9 @@ export interface Group {
   description: string;
 }
 
+export type GroupMap = { [groupId: string]: Group };
+
 export interface GroupsState {
-  groups: { [groupId: string]: Group };
+  groups: GroupMap;
+  isLoading: boolean;
 }

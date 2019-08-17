@@ -1,6 +1,6 @@
 import { MutationTree } from 'vuex';
-import { AuthState } from '@/store/auth/types';
+import { AddressBookSession, AuthState } from '@/store/auth/types';
 
 export default {
-  setUser: (state, value) => (state.user = value),
+  setSession: (state, value: AddressBookSession) => (state.addressBook = value),
 } as MutationTree<AuthState>;

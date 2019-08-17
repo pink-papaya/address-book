@@ -27,4 +27,24 @@ export default {
     });
     await tx.done;
   },
+
+  init: {
+    root: true,
+    async handler({ commit }) {
+      commit('setLoading', true);
+
+      let groups: Group[] = [];
+
+      let cursor = await (await db).transaction('groups').store.openCursor();
+
+      while (cursor) {
+        groups.push(cursor.value);
+        cursor = await cursor.continue();
+      }
+
+      commit('storeGroups', groups);
+
+      commit('setLoading', false);
+    },
+  },
 } as ActionTree<GroupsState, RootState>;

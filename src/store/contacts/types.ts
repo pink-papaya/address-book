@@ -5,6 +5,9 @@ export interface Contact {
   pictureUrl?: string;
 }
 
+export type ContactMap = { [contactName: string]: Contact };
+
 export interface ContactsState {
-  contacts: { [contactName: string]: Contact };
+  contacts: ContactMap;
+  isLoading: boolean;
 }

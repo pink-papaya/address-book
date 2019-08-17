@@ -44,6 +44,13 @@ export default Vue.extend({
   @apply block text-gray-700 font-bold mb-1;
 }
 
+.login__link {
+  @apply text-purple-900;
+  &:hover {
+    @apply text-purple-800 underline;
+  }
+}
+
 .login__button {
   @apply shadow bg-purple-900 text-white font-bold py-2 px-4 rounded;
 

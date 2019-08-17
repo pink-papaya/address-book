@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { MutationTree } from 'vuex';
-import { Contact, ContactsState } from '@/store/contacts/types';
+import { Contact, ContactMap, ContactsState } from '@/store/contacts/types';
 
 export default {
   addContact(state, contact: Contact) {
@@ -8,5 +8,17 @@ export default {
   },
   deleteContact(state, contact: Contact) {
     Vue.delete(state.contacts, contact.name);
+  },
+  storeContacts(state, contacts: Contact[]) {
+    state.contacts = contacts.reduce(
+      (acc, contact) => {
+        acc[contact.phone] = contact;
+        return acc;
+      },
+      {} as ContactMap,
+    );
+  },
+  setLoading(state, value: boolean) {
+    state.isLoading = value;
   },
 } as MutationTree<ContactsState>;

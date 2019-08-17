@@ -4,6 +4,9 @@ import {
   faAddressBook,
   faBars,
   faSearch,
+  faUsers,
+  faPlus,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import App from '@/App.vue';
@@ -17,6 +20,9 @@ import '@/assets/scss/tailwind.scss';
 library.add(faAddressBook);
 library.add(faBars);
 library.add(faSearch);
+library.add(faUsers);
+library.add(faPlus);
+library.add(faTimes);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

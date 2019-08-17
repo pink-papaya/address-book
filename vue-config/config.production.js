@@ -8,11 +8,6 @@ const prerenderedRoutesList = ['/login', '/home', '/'];
 module.exports = {
   configureWebpack: {
     plugins: [
-      /* Refer to https://www.npmjs.com/package/webpack-bundle-analyzer for more details */
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'disabled',
-        generateStatsFile: true,
-      }),
       /* See https://github.com/chrisvfritz/prerender-spa-plugin for more details */
       new PrerenderSPAPlugin({
         // Required - The path to the webpack-outputted app to prerender.

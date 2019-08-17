@@ -4,4 +4,5 @@ import { GroupsState } from '@/store/groups/types';
 
 export default {
   groups: state => Object.values(state.groups),
+  getGroupById: state => (id: string) => state.groups[id],
 } as GetterTree<GroupsState, RootState>;
