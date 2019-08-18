@@ -13,15 +13,17 @@
       <div class="flex flex-1 flex-col">
         <button
           type="button"
-          class="border-2 border-purple-900 mx-2 text-purple-900 hover:bg-purple-900 hover:text-white p-2 font-medium hidden md:block"
+          class="border-2 border-purple-900 mx-2 text-purple-900 hover:bg-purple-900 hover:text-white p-2 font-medium hidden md:block rounded"
+          @click="showCreateContactModal"
         >
           <font-awesome-icon icon="plus" class="mx-2" />
           Create contact
         </button>
 
         <button
+          :class="{ 'bg-purple-100': !activeGroup }"
           type="button"
-          class="md:mt-5 py-2 text-left hover:bg-purple-100 font-medium"
+          class="md:mt-5 py-2 text-left hover:bg-purple-100 font-medium rounded"
           @click="setGroup(null)"
         >
           <font-awesome-icon icon="users" class="mx-2 text-gray-600" />
@@ -34,7 +36,7 @@
           v-for="group in groups"
           :key="group.id"
           type="button"
-          class="my-2 p-2 text-left hover:bg-purple-100 font-medium"
+          class="my-2 p-2 text-left hover:bg-purple-100 font-medium rounded"
           @click="setGroup(group.id)"
         >
           <img
@@ -64,13 +66,16 @@ export default Vue.extend({
   computed: {
     ...mapState('app', ['isSideMenuOpen']),
     ...mapGetters('groups', ['groups']),
+    activeGroup() {
+      return null;
+    },
   },
 
   methods: {
     ...mapActions('app', ['toggleSideMenu']),
     ...mapActions('auth', ['logout']),
-    setGroup(id: string) {
-    },
+    ...mapActions('modals', ['showCreateContactModal']),
+    setGroup(id: string) {},
   },
 });
 </script>

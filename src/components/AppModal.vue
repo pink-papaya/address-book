@@ -8,28 +8,24 @@
         aria-describedby="modalDescription"
       >
         <header id="modalTitle" class="app-modal__header">
-          <slot name="header">
-            This is the default title!
+          <div class="flex-1">
+            <slot name="header" />
+          </div>
 
-            <button
-              type="button"
-              class="app-modal__close-button"
-              aria-label="Close modal"
-              @click="close"
-            >
-              <font-awesome-icon icon="times" size="lg" />
-            </button>
-          </slot>
+          <button
+            type="button"
+            class="app-modal__close-button"
+            aria-label="Close modal"
+            @click="close"
+          >
+            <font-awesome-icon icon="times" size="lg" />
+          </button>
         </header>
         <section id="modalDescription" class="app-modal__body">
-          <slot name="body">
-            I'm the default body!
-          </slot>
+          <slot name="body" />
         </section>
         <footer class="app-modal__footer">
-          <slot name="footer">
-            I'm the default footer!
-          </slot>
+          <slot name="footer" />
         </footer>
       </div>
     </div>
@@ -78,7 +74,7 @@ export default Vue.extend({
 }
 
 .app-modal {
-  @apply flex flex-col shadow-lg bg-white fixed inset-0 overflow-x-auto;
+  @apply flex flex-col shadow-lg bg-white fixed inset-0 overflow-x-auto rounded;
 
   @screen md {
     @apply fixed inset-auto w-full max-w-3xl;
@@ -103,8 +99,7 @@ export default Vue.extend({
 }
 
 .app-modal__close-button {
-  @apply text-purple-900;
-  cursor: pointer;
+  @apply text-purple-900 cursor-pointer;
 }
 
 .modal-fade-enter,

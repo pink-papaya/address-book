@@ -9,6 +9,7 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import Vuelidate from 'vuelidate';
 import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
@@ -25,6 +26,8 @@ library.add(faPlus);
 library.add(faTimes);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;
 

@@ -5,6 +5,7 @@ import app from './app';
 import auth from './auth';
 import groups from './groups';
 import contacts from './contacts';
+import modals from './modals';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ const storeOptions: StoreOptions<RootState> = {
     auth,
     groups,
     contacts,
+    modals,
   },
 };
 
