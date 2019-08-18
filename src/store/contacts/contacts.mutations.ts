@@ -12,7 +12,7 @@ export default {
   storeContacts(state, contacts: Contact[]) {
     state.contacts = contacts.reduce(
       (acc, contact) => {
-        acc[contact.phone] = contact;
+        acc[contact.name] = contact;
         return acc;
       },
       {} as ContactMap,

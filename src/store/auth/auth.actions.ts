@@ -7,7 +7,7 @@ import addressBookService from '@/services/addressBook.service';
 const sessionKey = 'address-book-session';
 
 export default {
-  register({ commit, dispatch }, { username, password }) {
+  register(context, { username, password }) {
     return addressBookService.create(username, password);
   },
 
@@ -21,13 +21,13 @@ export default {
 
     commit('setSession', session);
 
-    localStorage.setItem(sessionKey, JSON.stringify(addressBook.id));
+    localStorage.setItem(sessionKey, JSON.stringify(session));
     dispatch('contacts/storeContacts', addressBook.contacts, { root: true });
     dispatch('groups/storeGroups', addressBook.groups, { root: true });
   },
 
   logout({ commit }) {
-    commit('setSession', null);
+    commit('setSession', undefined);
     localStorage.removeItem(sessionKey);
 
     router.push('/login');

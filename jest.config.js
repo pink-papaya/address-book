@@ -19,9 +19,11 @@ module.exports = {
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
   ],
+  setupFiles: ['./tests/unit/setup.ts'],
   globals: {
     'ts-jest': {
       babelConfig: true,
     },
   },
+  collectCoverageFrom: ['src/**/*.{js,ts,vue}', '!src/main.ts'],
 };

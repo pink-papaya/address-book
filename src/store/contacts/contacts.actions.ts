@@ -4,7 +4,7 @@ import { Contact, ContactsState } from '@/store/contacts/types';
 import db from '@/db';
 
 export default {
-  add({ commit }, contact) {
+  addContact({ commit }, contact) {
     commit('addContact', contact);
   },
 

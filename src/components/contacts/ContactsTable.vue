@@ -13,10 +13,10 @@
         <tr
           v-for="contact in contacts"
           :key="contact.name"
-          class="hover:bg-purple-100 hover:cursor-pointer"
+          class="hover:bg-purple-100 cursor-pointer"
           @click="showDetails(contact)"
         >
-          <td class="">
+          <td>
             <img
               :src="contact.pictureUrl"
               :alt="contact.name"
@@ -26,7 +26,7 @@
           <td>{{ contact.name }}</td>
           <td class="hidden md:table-cell">{{ contact.phone }}</td>
           <td class="hidden md:table-cell">
-            {{ getGroupById(contact.groupId).name }}
+            {{ getGroupName(contact.groupId) }}
           </td>
         </tr>
       </tbody>
@@ -65,6 +65,12 @@ export default Vue.extend({
   methods: {
     showDetails(contact: Contact) {
       this.activeContact = contact;
+    },
+
+    getGroupName(groupId: string) {
+      const group = this.getGroupById(groupId);
+
+      return group ? group.name : groupId;
     },
   },
 });

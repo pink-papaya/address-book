@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import state from './groups.state';
 import mutations from './groups.mutations';
 import actions from './groups.actions';
