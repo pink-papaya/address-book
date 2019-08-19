@@ -4,14 +4,9 @@ describe('contacts module getters', () => {
   describe('contacts', () => {
     it('should return an array of the contacts in the state map', () => {
       const contact = { name: 'name' };
-      const result = getters.contacts(
-        {
-          contacts: { name: contact },
-        } as any,
-        null,
-        {},
-        null,
-      );
+      const result = (getters as any).contacts({
+        contacts: { name: contact },
+      });
 
       expect(result).toEqual([contact]);
     });
