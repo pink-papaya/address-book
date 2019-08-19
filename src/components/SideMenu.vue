@@ -20,24 +20,25 @@
           Create contact
         </button>
 
-        <button
-          :class="{ 'bg-purple-100': !activeGroup }"
-          type="button"
-          class="md:mt-5 py-2 text-left hover:bg-purple-100 font-medium rounded"
-          @click="setGroup(null)"
+        <a
+          :class="{ 'side-menu__group-button--active': !selectedGroupId }"
+          class="side-menu__group-button md:mt-5"
+          @click="selectGroup(undefined)"
         >
           <font-awesome-icon icon="users" class="mx-2 text-gray-600" />
           <span class="text-gray-900">All contacts</span>
-        </button>
+        </a>
 
         <span class="mt-5 text-gray-900 font-medium">Groups</span>
 
-        <button
+        <a
           v-for="group in groups"
           :key="group.id"
-          type="button"
-          class="my-2 p-2 text-left hover:bg-purple-100 font-medium rounded"
-          @click="setGroup(group.id)"
+          :class="{
+            'side-menu__group-button--active': selectedGroupId === group.id,
+          }"
+          class="my-2 p-2 side-menu__group-button"
+          @click="selectGroup(group.id)"
         >
           <img
             :src="group.pictureUrl"
@@ -45,7 +46,7 @@
             class="h-8 w-8 inline mr-2 object-cover rounded-full"
           />
           <span class="text-gray-900">{{ group.name }}</span>
-        </button>
+        </a>
       </div>
     </nav>
     <div
@@ -65,17 +66,15 @@ export default Vue.extend({
 
   computed: {
     ...mapState('app', ['isSideMenuOpen']),
+    ...mapState('groups', ['selectedGroupId']),
     ...mapGetters('groups', ['groups']),
-    activeGroup() {
-      return null;
-    },
   },
 
   methods: {
     ...mapActions('app', ['toggleSideMenu']),
     ...mapActions('auth', ['logout']),
     ...mapActions('modals', ['showCreateContactModal']),
-    setGroup(id: string) {},
+    ...mapActions('groups', ['selectGroup']),
   },
 });
 </script>
@@ -96,6 +95,17 @@ export default Vue.extend({
   @screen md {
     @apply shadow-none z-0;
     margin-top: 85px;
+  }
+}
+
+.side-menu__group-button {
+  @apply py-2 text-left font-medium rounded cursor-pointer;
+  &:hover:not(&--active) {
+    @apply bg-gray-200;
+  }
+
+  &--active {
+    @apply bg-purple-200;
   }
 }
 </style>

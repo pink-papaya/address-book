@@ -18,6 +18,10 @@ export default {
     }, 1000);
   },
 
+  selectGroup({ commit }, groupId?: string) {
+    commit('setSelectedGroupId', groupId);
+  },
+
   async storeGroups({ commit }, groups: Group[]) {
     commit('storeGroups', groups);
 

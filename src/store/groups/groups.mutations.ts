@@ -25,4 +25,7 @@ export default {
   setLoading(state, value: boolean) {
     state.isLoading = value;
   },
+  setSelectedGroupId(state, value?: string) {
+    state.selectedGroupId = value;
+  },
 } as MutationTree<GroupsState>;
