@@ -37,7 +37,92 @@
           :class="{
             'side-menu__group-button--active': selectedGroupId === group.id,
           }"
-          class="my-2 p-2 side-menu__group-button"
+          class="mt-2 p-2 side-menu__group-button"
+          @click="selectGroup(group.id)"
+        >
+          <img
+            :src="group.pictureUrl"
+            :alt="group.name"
+            class="h-8 w-8 inline mr-2 object-cover rounded-full"
+          />
+          <span class="text-gray-900">{{ group.name }}</span>
+        </a>
+
+        <a
+          v-for="group in groups"
+          :key="group.id"
+          :class="{
+            'side-menu__group-button--active': selectedGroupId === group.id,
+          }"
+          class="mt-2 p-2 side-menu__group-button"
+          @click="selectGroup(group.id)"
+        >
+          <img
+            :src="group.pictureUrl"
+            :alt="group.name"
+            class="h-8 w-8 inline mr-2 object-cover rounded-full"
+          />
+          <span class="text-gray-900">{{ group.name }}</span>
+        </a>
+
+        <a
+          v-for="group in groups"
+          :key="group.id"
+          :class="{
+            'side-menu__group-button--active': selectedGroupId === group.id,
+          }"
+          class="mt-2 p-2 side-menu__group-button"
+          @click="selectGroup(group.id)"
+        >
+          <img
+            :src="group.pictureUrl"
+            :alt="group.name"
+            class="h-8 w-8 inline mr-2 object-cover rounded-full"
+          />
+          <span class="text-gray-900">{{ group.name }}</span>
+        </a>
+
+        <a
+          v-for="group in groups"
+          :key="group.id"
+          :class="{
+            'side-menu__group-button--active': selectedGroupId === group.id,
+          }"
+          class="mt-2 p-2 side-menu__group-button"
+          @click="selectGroup(group.id)"
+        >
+          <img
+            :src="group.pictureUrl"
+            :alt="group.name"
+            class="h-8 w-8 inline mr-2 object-cover rounded-full"
+          />
+          <span class="text-gray-900">{{ group.name }}</span>
+        </a>
+
+        <a
+          v-for="group in groups"
+          :key="group.id"
+          :class="{
+            'side-menu__group-button--active': selectedGroupId === group.id,
+          }"
+          class="mt-2 p-2 side-menu__group-button"
+          @click="selectGroup(group.id)"
+        >
+          <img
+            :src="group.pictureUrl"
+            :alt="group.name"
+            class="h-8 w-8 inline mr-2 object-cover rounded-full"
+          />
+          <span class="text-gray-900">{{ group.name }}</span>
+        </a>
+
+        <a
+          v-for="group in groups"
+          :key="group.id"
+          :class="{
+            'side-menu__group-button--active': selectedGroupId === group.id,
+          }"
+          class="mt-2 p-2 side-menu__group-button"
           @click="selectGroup(group.id)"
         >
           <img

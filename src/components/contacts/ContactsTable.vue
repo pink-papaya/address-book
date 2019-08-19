@@ -3,10 +3,9 @@
     <table class="w-full">
       <thead>
         <tr class="border-b">
-          <th class="w-16"></th>
-          <th>Name</th>
-          <th class="hidden md:table-cell">Phone</th>
-          <th class="hidden md:table-cell">Group</th>
+          <th class="md:w-1/3">Name</th>
+          <th class="hidden md:table-cell md:w-1/3">Phone</th>
+          <th class="hidden md:table-cell md:w-1/3">Group</th>
         </tr>
       </thead>
       <tbody>
@@ -20,10 +19,10 @@
             <img
               :src="contact.pictureUrl"
               :alt="contact.name"
-              class="h-12 w-12 rounded-full object-cover"
+              class="h-12 w-12 rounded-full object-cover inline mr-2"
             />
+            {{ contact.name }}
           </td>
-          <td>{{ contact.name }}</td>
           <td class="hidden md:table-cell">{{ contact.phone }}</td>
           <td class="hidden md:table-cell">
             {{ getGroupName(contact.groupId) }}
@@ -58,7 +57,9 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters('contacts', ['contacts']),
+    ...mapGetters('contacts', {
+      contacts: 'filteredContacts',
+    }),
     ...mapGetters('groups', ['getGroupById']),
   },
 
