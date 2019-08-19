@@ -107,5 +107,7 @@ export default Vue.extend({
   &--active {
     @apply bg-purple-200;
   }
+
+  -webkit-tap-highlight-color: transparent;
 }
 </style>
