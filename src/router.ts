@@ -31,12 +31,18 @@ const router = new Router({
       name: 'login',
       component: () =>
         import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+      meta: {
+        requiresAuthless: true,
+      },
     },
     {
       path: '/signup',
       name: 'signup',
       component: () =>
         import(/* webpackChunkName: "signup" */ '@/views/SignUp.vue'),
+      meta: {
+        requiresAuthless: true,
+      },
     },
     {
       path: '*',
@@ -55,6 +61,13 @@ router.beforeEach((to, from, next) => {
       : '/check-login';
 
     return next(`${path}?redirectUrl=${to.path}`);
+  }
+
+  if (
+    to.matched.some(route => route.meta.requiresAuthless) &&
+    store.getters['auth/isUserLoggedIn']
+  ) {
+    return next('/');
   }
 
   next();
