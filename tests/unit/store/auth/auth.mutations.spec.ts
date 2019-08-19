@@ -7,7 +7,7 @@ describe('auth module mutation', () => {
         addressBook: undefined,
       };
 
-      const session = { username: 'name', addressBookId: 'id' };
+      const session = { username: 'name', id: 'id' };
 
       mutations.setSession(state, session);
 

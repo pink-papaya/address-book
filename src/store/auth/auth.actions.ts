@@ -26,6 +26,14 @@ export default {
     dispatch('groups/storeGroups', addressBook.groups, { root: true });
   },
 
+  async refreshData({ getters, dispatch }) {
+    const addressBook = await addressBookService.getById(getters.addressBookId);
+    await dispatch('contacts/storeContacts', addressBook.contacts, {
+      root: true,
+    });
+    await dispatch('groups/storeGroups', addressBook.groups, { root: true });
+  },
+
   logout({ commit }) {
     commit('setSession', undefined);
     localStorage.removeItem(sessionKey);
@@ -35,11 +43,12 @@ export default {
 
   init: {
     root: true,
-    handler({ commit }) {
+    handler({ commit, dispatch }) {
       const session = JSON.parse(localStorage.getItem(sessionKey) || 'null');
 
       if (session) {
         commit('setSession', session);
+        dispatch('refreshData');
       }
     },
   },
