@@ -41,6 +41,7 @@
           @click="selectGroup(group.id)"
         >
           <app-img-loader
+            :src="group.pictureUrl"
             :placeholder-src="groupImgPlaceholder"
             alt=""
             class="h-8 w-8 inline mr-2 object-cover rounded-full"
