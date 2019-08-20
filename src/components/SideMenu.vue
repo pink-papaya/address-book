@@ -40,9 +40,9 @@
           class="mt-1 p-2 side-menu__group-button"
           @click="selectGroup(group.id)"
         >
-          <img
-            :src="group.pictureUrl"
-            :alt="group.name"
+          <app-img-loader
+            :placeholder-src="groupImgPlaceholder"
+            alt=""
             class="h-8 w-8 inline mr-2 object-cover rounded-full"
           />
           <span class="text-gray-900">{{ group.name }}</span>
@@ -60,9 +60,19 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
+import AppImgLoader from '@/components/AppImgLoader.vue';
+import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
 
 export default Vue.extend({
   name: 'SideMenu',
+
+  components: { AppImgLoader },
+
+  data() {
+    return {
+      groupImgPlaceholder,
+    };
+  },
 
   computed: {
     ...mapState('app', ['isSideMenuOpen']),

@@ -8,7 +8,7 @@
           <th class="hidden md:table-cell md:w-1/3">Group</th>
         </tr>
       </thead>
-      <tbody>
+      <transition-group name="table-fade" tag="tbody">
         <tr
           v-for="contact in contacts"
           :key="contact.name"
@@ -16,19 +16,20 @@
           @click="showDetails(contact)"
         >
           <td>
-            <img
+            <app-img-loader
               :src="contact.pictureUrl"
-              :alt="contact.name"
+              :placeholder-src="contactImgPlaceholder"
+              alt=""
               class="h-12 w-12 rounded-full object-cover inline mr-2"
             />
             {{ contact.name }}
           </td>
           <td class="hidden md:table-cell">{{ contact.phone }}</td>
           <td class="hidden md:table-cell">
-            {{ getGroupName(contact.groupId) }}
+            {{ contact.groupName }}
           </td>
         </tr>
-      </tbody>
+      </transition-group>
     </table>
 
     <app-modal
@@ -44,15 +45,18 @@ import Vue from 'vue';
 import { mapGetters } from 'vuex';
 import AppModal from '@/components/AppModal.vue';
 import { Contact } from '@/store/contacts/types';
+import AppImgLoader from '@/components/AppImgLoader.vue';
+import * as contactImgPlaceholder from '@/assets/img/contact-default-photo.png';
 
 export default Vue.extend({
   name: 'ContactsTable',
 
-  components: { AppModal },
+  components: { AppModal, AppImgLoader },
 
   data() {
     return {
       activeContact: null as null | Contact,
+      contactImgPlaceholder,
     };
   },
 
@@ -60,18 +64,11 @@ export default Vue.extend({
     ...mapGetters('contacts', {
       contacts: 'filteredContacts',
     }),
-    ...mapGetters('groups', ['getGroupById']),
   },
 
   methods: {
     showDetails(contact: Contact) {
       this.activeContact = contact;
-    },
-
-    getGroupName(groupId: string) {
-      const group = this.getGroupById(groupId);
-
-      return group ? group.name : groupId;
     },
   },
 });
@@ -85,5 +82,19 @@ td {
 
 th {
   @apply text-gray-700 font-medium;
+}
+
+tr {
+  transition: all 0.25s;
+}
+
+.table-fade-enter,
+.table-fade-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.table-fade-leave-active {
+  position: absolute;
 }
 </style>
