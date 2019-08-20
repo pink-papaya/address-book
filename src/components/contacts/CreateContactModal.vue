@@ -16,7 +16,15 @@
           <label class="login__label" for="name">
             Name
           </label>
-          <input id="name" v-model="name" type="text" class="login__input" />
+          <input
+            id="name"
+            v-model.trim="$v.name.$model"
+            type="text"
+            class="login__input"
+          />
+          <span v-show="$v.name.$error">
+            This field is required.
+          </span>
         </div>
         <div class="mb-6">
           <label class="login__label" for="phone">
@@ -112,8 +120,16 @@ export default Vue.extend({
   methods: {
     ...mapActions('modals', ['hideCreateContactModal']),
     ...mapActions('contacts', ['addContact']),
+
     async createContact() {
       const { groupId, name, phone, pictureUrl } = this;
+
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return;
+      }
+
       try {
         await this.addContact({
           groupId,
