@@ -23,7 +23,7 @@
           class="login__input"
         />
       </div>
-      <button class="login__button" type="submit">
+      <button :disabled="isLoggingIn" class="login__button" type="submit">
         Log In
       </button>
       <div class="mt-6 text-gray-700">
@@ -49,17 +49,30 @@ export default Vue.extend({
     return {
       username: '',
       password: '',
+      isLoggingIn: false,
     };
   },
 
   methods: {
     async login() {
-      await this.$store.dispatch('auth/login', {
-        username: this.username,
-        password: this.password,
-      });
+      if (this.isLoggingIn) {
+        return;
+      }
 
-      this.$router.push('/');
+      this.isLoggingIn = true;
+
+      try {
+        await this.$store.dispatch('auth/login', {
+          username: this.username,
+          password: this.password,
+        });
+
+        this.$router.push('/');
+      } catch (e) {
+        // @todo show error
+      }
+
+      this.isLoggingIn = false;
     },
   },
 });

@@ -26,6 +26,7 @@ export default {
     commit('storeGroups', groups);
 
     const tx = (await db).transaction('groups', 'readwrite');
+    tx.store.clear();
     groups.forEach(group => {
       tx.store.put(group);
     });

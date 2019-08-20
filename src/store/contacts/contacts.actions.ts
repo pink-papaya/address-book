@@ -31,6 +31,7 @@ export default {
     commit('storeContacts', contacts);
 
     const tx = (await db).transaction('contacts', 'readwrite');
+    tx.store.clear();
     contacts.forEach(contact => {
       tx.store.put(contact);
     });

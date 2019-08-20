@@ -4,7 +4,7 @@
       <div
         class="md:hidden flex flex-col justify-center items-center border-b-2 pb-5 mb-5"
       >
-        <span class="font-medium text-gray-900">Username</span>
+        <span class="font-medium text-gray-900">{{ username }}</span>
         <button class="mx-5 font-bold text-purple-900" @click="logout">
           Logout
         </button>
@@ -79,6 +79,7 @@ export default Vue.extend({
     ...mapState('app', ['isSideMenuOpen']),
     ...mapState('groups', ['selectedGroupId']),
     ...mapGetters('groups', ['groups']),
+    ...mapGetters('auth', ['username']),
   },
 
   methods: {

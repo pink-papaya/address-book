@@ -28,7 +28,7 @@
     </div>
 
     <div class="hidden md:block">
-      <span class="font-medium text-gray-900">Username</span>
+      <span class="font-medium text-gray-900">{{ username }}</span>
       <button class="mx-5 font-bold text-purple-900" @click="logout">
         Logout
       </button>
@@ -39,12 +39,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import debounce from 'lodash/debounce';
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default Vue.extend({
   name: 'AppBar',
 
   computed: {
+    ...mapGetters('auth', ['username']),
     searchQuery: {
       get() {
         return this.$store.state.contacts.searchQuery;
