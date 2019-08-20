@@ -14,6 +14,7 @@
     <div class="mx-5 relative flex-1">
       <div class="w-full max-w-2xl">
         <input
+          v-model="searchQuery"
           type="search"
           name="search"
           class="app-bar__search bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 pr-4 pl-10 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
@@ -37,14 +38,31 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions } from 'vuex';
+import debounce from 'lodash/debounce';
+import { mapActions, mapMutations } from 'vuex';
 
 export default Vue.extend({
   name: 'AppBar',
 
+  computed: {
+    searchQuery: {
+      get() {
+        return this.$store.state.contacts.searchQuery;
+      },
+      set(value) {
+        this.debouncedSearch(value);
+      },
+    },
+  },
+
+  created() {
+    this.debouncedSearch = debounce(this.setSearchQuery, 300);
+  },
+
   methods: {
     ...mapActions('app', ['toggleSideMenu']),
     ...mapActions('auth', ['logout']),
+    ...mapMutations('contacts', ['setSearchQuery']),
   },
 });
 </script>
