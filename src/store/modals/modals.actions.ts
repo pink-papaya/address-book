@@ -24,7 +24,7 @@ export default {
     handler({ state, commit }) {
       window.addEventListener('popstate', event => {
         const mutationMap = {
-          contactsHistoryKey: 'setIsCreateContactModalOpen',
+          [contactsHistoryKey]: 'setIsCreateContactModalOpen',
         };
 
         if (
