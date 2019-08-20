@@ -21,4 +21,7 @@ export default {
   setLoading(state, value: boolean) {
     state.isLoading = value;
   },
+  setSearchQuery(state, value: string) {
+    state.searchQuery = value;
+  },
 } as MutationTree<ContactsState>;

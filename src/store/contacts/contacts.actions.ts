@@ -2,10 +2,29 @@ import { ActionTree } from 'vuex';
 import { RootState } from '@/store/types';
 import { Contact, ContactsState } from '@/store/contacts/types';
 import db from '@/db';
+import contactService from '@/services/contact.service';
 
 export default {
-  addContact({ commit }, contact) {
+  async addContact({ commit, dispatch, rootGetters }, contact) {
+    try {
+      await (await db).add('contacts', contact);
+    } catch (e) {
+      throw new Error('Contact name already exists');
+    }
+
     commit('addContact', contact);
+
+    try {
+      await contactService.create(rootGetters['auth/addressBookId'], contact);
+    } catch (e) {
+      /* @todo: show error notification */
+      dispatch('rollBackCreate', contact);
+    }
+  },
+
+  async rollBackCreate({ commit }, contact: Contact) {
+    await (await db).delete('contacts', contact.name);
+    commit('deleteContact', contact);
   },
 
   async storeContacts({ commit }, contacts: Contact[]) {

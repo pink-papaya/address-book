@@ -46,7 +46,7 @@
               class="block appearance-none w-full bg-gray-200 border-2 border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
             >
               <option>Select a group</option>
-              <option v-for="group in groups" :key="group.id">
+              <option v-for="group in groups" :key="group.id" :value="group.id">
                 {{ group.name }}
               </option>
             </select>
@@ -111,8 +111,19 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions('modals', ['hideCreateContactModal']),
-    createContact() {
-      console.log('save');
+    ...mapActions('contacts', ['addContact']),
+    async createContact() {
+      const { groupId, name, phone, pictureUrl } = this;
+      try {
+        await this.addContact({
+          groupId,
+          name,
+          phone,
+          pictureUrl,
+        });
+      } catch (e) {
+        console.log(e);
+      }
       return null;
     },
   },
