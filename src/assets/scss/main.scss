@@ -1,0 +1,7 @@
+.app__create-contact-button {
+  @apply border-2 border-purple-900 text-purple-900 p-2 font-medium rounded;
+
+  &:hover {
+    @apply bg-purple-900 text-white;
+  }
+}
