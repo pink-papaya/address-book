@@ -74,7 +74,7 @@ export default Vue.extend({
 }
 
 .app-modal {
-  @apply flex flex-col shadow-lg bg-white fixed inset-0 overflow-x-auto rounded;
+  @apply flex flex-col shadow-lg bg-white fixed inset-0 overflow-x-auto rounded max-h-screen;
 
   @screen md {
     @apply fixed inset-auto w-full max-w-3xl;
@@ -83,7 +83,11 @@ export default Vue.extend({
 
 .app-modal__header,
 .app-modal__footer {
-  @apply p-5 flex;
+  @apply py-3 px-5 flex;
+
+  @screen md {
+    @apply p-5;
+  }
 }
 
 .app-modal__header {
@@ -95,7 +99,7 @@ export default Vue.extend({
 }
 
 .app-modal__body {
-  @apply p-5 flex-1;
+  @apply p-5 flex-1 overflow-y-auto;
 }
 
 .app-modal__close-button {
