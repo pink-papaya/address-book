@@ -1,4 +1,4 @@
-workbox.core.setCacheNameDetails({ prefix: 'bento-starter' });
+workbox.core.setCacheNameDetails({ prefix: 'take-home' });
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
@@ -22,5 +22,7 @@ workbox.routing.registerRoute(
 );
 
 addEventListener('message', messageEvent => {
-  if (messageEvent.data === 'skipWaiting') return self.skipWaiting();
+  if (messageEvent.data === 'skipWaiting') {
+    return self.skipWaiting();
+  }
 });
