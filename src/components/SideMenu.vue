@@ -10,7 +10,7 @@
         </button>
       </div>
 
-      <div class="flex flex-1 flex-col">
+      <div class="flex flex-1 flex-col overflow-auto">
         <button
           type="button"
           class="border-2 border-purple-900 mx-2 text-purple-900 hover:bg-purple-900 hover:text-white p-2 font-medium hidden md:block rounded"
@@ -31,23 +31,25 @@
 
         <span class="mt-5 text-gray-900 font-medium">Groups</span>
 
-        <a
-          v-for="group in groups"
-          :key="group.id"
-          :class="{
-            'side-menu__group-button--active': selectedGroupId === group.id,
-          }"
-          class="mt-1 p-2 side-menu__group-button"
-          @click="selectGroup(group.id)"
-        >
-          <app-img-loader
-            :src="group.pictureUrl"
-            :placeholder-src="groupImgPlaceholder"
-            alt=""
-            class="h-8 w-8 inline mr-2 object-cover rounded-full"
-          />
-          <span class="text-gray-900">{{ group.name }}</span>
-        </a>
+        <div class="overflow-y-auto flex flex-1 flex-col">
+          <a
+            v-for="group in groups"
+            :key="group.id"
+            :class="{
+              'side-menu__group-button--active': selectedGroupId === group.id,
+            }"
+            class="mt-1 p-2 side-menu__group-button"
+            @click="selectGroup(group.id)"
+          >
+            <app-img-loader
+              :src="group.pictureUrl"
+              :placeholder-src="groupImgPlaceholder"
+              alt=""
+              class="h-8 w-8 inline mr-2 object-cover rounded-full"
+            />
+            <span class="text-gray-900">{{ group.name }}</span>
+          </a>
+        </div>
       </div>
     </nav>
     <div
@@ -107,6 +109,7 @@ export default Vue.extend({
   @screen md {
     @apply shadow-none z-0;
     margin-top: 85px;
+    height: calc(100vh - 85px);
   }
 }
 
