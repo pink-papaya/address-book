@@ -9,10 +9,6 @@ class AddressBookService {
   ): Promise<Contact> {
     return api.post(`/${addressBookId}/contacts`, contact);
   }
-
-  public getByName(id: string): Promise<AddressBook> {
-    return api.get(id);
-  }
 }
 
 export default new AddressBookService();

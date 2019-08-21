@@ -2,20 +2,24 @@ import { ActionTree } from 'vuex';
 import { RootState } from '@/store/types';
 import { Group, GroupsState } from '@/store/groups/types';
 import db from '@/db';
+import groupService from '@/services/group.service';
 
 export default {
-  add({ commit }, group = { name: 'name' }) {
-    const oldId = `temp-${Date.now()}`;
+  async addGroup({ commit, dispatch, rootGetters }, group: Group) {
+    await (await db).add('groups', group);
 
-    commit('addGroup', { ...group, id: oldId });
-    const newGroup = { id: Date.now(), name: 'group' };
+    commit('addGroup', group);
+    try {
+      await groupService.create(rootGetters['auth/addressBookId'], group);
+    } catch (e) {
+      /* @todo: show error notification */
+      dispatch('rollBackCreate', group);
+    }
+  },
 
-    setTimeout(() => {
-      commit('updateGroupId', {
-        oldId,
-        group: newGroup,
-      });
-    }, 1000);
+  async rollBackCreate({ commit }, group: Group) {
+    await (await db).delete('groups', group.id);
+    commit('deleteGroup', group);
   },
 
   selectGroup({ commit }, groupId?: string) {

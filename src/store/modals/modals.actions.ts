@@ -3,19 +3,33 @@ import { RootState } from '@/store/types';
 import { ModalsState } from '@/store/modals/types';
 import router from '@/router';
 
-const contactsHistoryKey = 'contacts-model-state';
+const contactsHistoryKey = 'contacts-modal-state';
+const groupsHistoryKey = 'groups-modal-state';
 
 export default {
   showCreateContactModal({ commit, dispatch }) {
     commit('setIsCreateContactModalOpen', true);
     window.history.replaceState(
       { ...(history.state || {}), historyKey: contactsHistoryKey },
-      'key',
+      document.title,
     );
-    window.history.pushState({}, 'key2');
+    window.history.pushState({}, document.title);
   },
   hideCreateContactModal({ state, commit }) {
     commit('setIsCreateContactModalOpen', false);
+    router.go(-1);
+  },
+
+  showCreateGroupModal({ commit, dispatch }) {
+    commit('setIsCreateGroupModalOpen', true);
+    window.history.replaceState(
+      { ...(history.state || {}), historyKey: groupsHistoryKey },
+      document.title,
+    );
+    window.history.pushState({}, document.title);
+  },
+  hideCreateGroupModal({ state, commit }) {
+    commit('setIsCreateGroupModalOpen', false);
     router.go(-1);
   },
 
@@ -25,6 +39,7 @@ export default {
       window.addEventListener('popstate', event => {
         const mutationMap = {
           [contactsHistoryKey]: 'setIsCreateContactModalOpen',
+          [groupsHistoryKey]: 'setIsCreateGroupModalOpen',
         };
 
         if (

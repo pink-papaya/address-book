@@ -29,7 +29,15 @@
           <span class="text-gray-900">All contacts</span>
         </a>
 
-        <span class="mt-5 text-gray-900 font-medium">Groups</span>
+        <a
+          class="side-menu__group-button md:mt-5"
+          @click="showCreateGroupModal"
+        >
+          <font-awesome-icon icon="plus" class="mx-2 text-gray-600" />
+          <span class="text-gray-900">Create group</span>
+        </a>
+
+        <span class="mt-1 text-gray-900 font-medium">Groups</span>
 
         <div class="overflow-y-auto flex flex-1 flex-col">
           <a
@@ -87,7 +95,7 @@ export default Vue.extend({
   methods: {
     ...mapActions('app', ['toggleSideMenu']),
     ...mapActions('auth', ['logout']),
-    ...mapActions('modals', ['showCreateContactModal']),
+    ...mapActions('modals', ['showCreateContactModal', 'showCreateGroupModal']),
     ...mapActions('groups', ['selectGroup']),
   },
 });

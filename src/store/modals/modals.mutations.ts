@@ -5,4 +5,7 @@ export default {
   setIsCreateContactModalOpen(state, value) {
     state.isCreateContactModalOpen = value;
   },
+  setIsCreateGroupModalOpen(state, value) {
+    state.isCreateGroupModalOpen = value;
+  },
 } as MutationTree<ModalsState>;
