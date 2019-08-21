@@ -84,6 +84,7 @@ export default Vue.extend({
       this.name = '';
       this.description = '';
       this.pictureUrl = '';
+      this.$v.$reset();
     },
 
     async createGroup() {

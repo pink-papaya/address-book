@@ -117,6 +117,7 @@ export default Vue.extend({
       this.name = '';
       this.phone = '';
       this.pictureUrl = '';
+      this.$v.$reset();
     },
 
     async createContact() {
