@@ -7,11 +7,7 @@
     </template>
 
     <template #body>
-      <form
-        id="create-group-form"
-        class="w-full"
-        @submit.prevent="createGroup"
-      >
+      <form id="create-group-form" class="w-full" @submit.prevent="createGroup">
         <app-input
           v-model.trim="$v.name.$model"
           :has-error="$v.name.$error"

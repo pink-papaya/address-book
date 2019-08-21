@@ -1,17 +1,9 @@
 /* eslint-disable */
 const purgecss = require('@fullhuman/postcss-purgecss')({
   // Specify the paths to all of the template files in your project
-  content: [
-    './public/**/*.html',
-    './src/**/*.vue',
-  ],
+  content: ['./public/**/*.html', './src/**/*.vue'],
 
-  whitelist: [
-    '*-fa',
-    'fa-*',
-    'v-select*',
-    'vs*',
-  ],
+  whitelist: ['*-fa', 'fa-*', 'v-select*', 'vs*'],
 
   // Include any special characters you're using in this regular expression
   defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
