@@ -3,7 +3,17 @@
     <label class="app-input__label" :for="id">
       {{ label }}
     </label>
+    <textarea
+      v-if="type === 'textarea'"
+      :id="id"
+      :value="value"
+      :type="type"
+      :class="{ 'app-input__input--has-error': hasError }"
+      class="app-input__input"
+      @input="$emit('input', $event.target.value)"
+    />
     <input
+      v-else
       :id="id"
       :value="value"
       :type="type"
