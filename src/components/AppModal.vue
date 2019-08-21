@@ -7,7 +7,7 @@
         aria-labelledby="modalTitle"
         aria-describedby="modalDescription"
       >
-        <header id="modalTitle" class="app-modal__header">
+        <header class="app-modal__header">
           <div class="flex-1">
             <slot name="header" />
           </div>
@@ -21,7 +21,7 @@
             <font-awesome-icon icon="times" size="lg" />
           </button>
         </header>
-        <section id="modalDescription" class="app-modal__body">
+        <section class="app-modal__body">
           <slot name="body" />
         </section>
         <footer class="app-modal__footer">
