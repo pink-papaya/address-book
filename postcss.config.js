@@ -8,7 +8,9 @@ const purgecss = require('@fullhuman/postcss-purgecss')({
 
   whitelist: [
     '*-fa',
-    'fa-*'
+    'fa-*',
+    'v-select*',
+    'vs*',
   ],
 
   // Include any special characters you're using in this regular expression

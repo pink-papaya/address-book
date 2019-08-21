@@ -1,5 +1,5 @@
 <template>
-  <app-modal v-show="isCreateContactModalOpen" @close="hideCreateContactModal">
+  <app-modal v-show="isCreateContactModalOpen" @close="close">
     <template #header>
       <div class="font-medium">
         Create contact
@@ -12,67 +12,47 @@
         class="w-full"
         @submit.prevent="createContact"
       >
-        <div class="mb-6">
-          <label class="login__label" for="name">
-            Name
-          </label>
-          <input
-            id="name"
-            v-model.trim="$v.name.$model"
-            type="text"
-            class="login__input"
-          />
-          <span v-show="$v.name.$error">
-            This field is required.
-          </span>
-        </div>
-        <div class="mb-6">
-          <label class="login__label" for="phone">
-            Phone
-          </label>
-          <input id="phone" v-model="phone" type="text" class="login__input" />
-        </div>
-        <div class="mb-6">
-          <label class="login__label" for="picture">
-            Picture url
-          </label>
-          <input
-            id="picture"
-            v-model="pictureUrl"
-            type="text"
-            class="login__input"
-          />
-        </div>
-        <div class="mb-6">
-          <label class="login__label" for="group">
-            Group
-          </label>
-          <div class="relative">
-            <select
-              id="group"
-              v-model="groupId"
-              class="block appearance-none w-full bg-gray-200 border-2 border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-            >
-              <option>Select a group</option>
-              <option v-for="group in groups" :key="group.id" :value="group.id">
-                {{ group.name }}
-              </option>
-            </select>
-            <div
-              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-            >
-              <svg
-                class="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
+        <app-select
+          v-model="$v.groupId.$model"
+          :has-error="$v.groupId.$error"
+          :options="groups"
+          option-label="name"
+          label="Group"
+          error="Group is required"
+          class="mb-6"
+        >
+          <template #option="{ option }">
+            <app-img-loader
+              :src="option.pictureUrl"
+              :placeholder-src="groupImgPlaceholder"
+              alt=""
+              class="h-8 w-8 inline mr-2 object-cover rounded-full"
+            />
+            {{ option.name }}
+          </template>
+        </app-select>
+
+        <app-input
+          v-model.trim="$v.name.$model"
+          :has-error="$v.name.$error"
+          label="Name"
+          error="Name is required"
+          class="mb-6"
+        />
+        <app-input
+          v-model.trim="$v.phone.$model"
+          :has-error="$v.phone.$error"
+          label="Phone"
+          error="Phone is required"
+          class="mb-6"
+        />
+        <app-input
+          v-model.trim="$v.pictureUrl.$model"
+          :has-error="$v.pictureUrl.$error"
+          label="Picture url"
+          error="Picture url is required"
+          class="mb-6"
+        />
       </form>
     </template>
 
@@ -89,12 +69,19 @@ import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import AppModal from '@/components/AppModal.vue';
+import AppInput from '@/components/AppInput.vue';
+import AppSelect from '@/components/AppSelect.vue';
+import AppImgLoader from '@/components/AppImgLoader.vue';
+import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
 
 export default Vue.extend({
   name: 'CreateContactModal',
 
   components: {
     AppModal,
+    AppInput,
+    AppSelect,
+    AppImgLoader,
   },
 
   validations: {
@@ -110,6 +97,7 @@ export default Vue.extend({
       name: '',
       phone: '',
       pictureUrl: '',
+      groupImgPlaceholder,
     };
   },
 
@@ -120,6 +108,15 @@ export default Vue.extend({
   methods: {
     ...mapActions('modals', ['hideCreateContactModal']),
     ...mapActions('contacts', ['addContact']),
+
+    close() {
+      this.hideCreateContactModal();
+
+      this.groupId = '';
+      this.name = '';
+      this.phone = '';
+      this.pictureUrl = '';
+    },
 
     async createContact() {
       const { groupId, name, phone, pictureUrl } = this;
@@ -140,7 +137,8 @@ export default Vue.extend({
       } catch (e) {
         console.log(e);
       }
-      return null;
+
+      this.close();
     },
   },
 });
