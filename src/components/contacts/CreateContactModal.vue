@@ -16,6 +16,7 @@
           v-model="$v.groupId.$model"
           :has-error="$v.groupId.$error"
           :options="groups"
+          :reduce="group => group.id"
           option-label="name"
           label="Group"
           error="Group is required"
