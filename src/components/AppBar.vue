@@ -17,7 +17,9 @@
           v-model="searchQuery"
           type="search"
           name="search"
+          placeholder="Search"
           class="app-bar__search bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 pr-4 pl-10 text-gray-700 focus:outline-none focus:bg-white focus:border-purple-500"
+          aria-label="Search"
         />
         <div
           class="pointer-events-auto md:pointer-events-none absolute inset-y-0 left-0 pl-4 flex items-center"

@@ -11,14 +11,7 @@
       </div>
 
       <div class="flex flex-1 flex-col overflow-auto">
-        <button
-          type="button"
-          class="border-2 border-purple-900 mx-2 text-purple-900 hover:bg-purple-900 hover:text-white p-2 font-medium hidden md:block rounded"
-          @click="showCreateContactModal"
-        >
-          <font-awesome-icon icon="plus" class="mx-2" />
-          Create contact
-        </button>
+        <create-contact-button class="mx-2 hidden md:block" />
 
         <a
           :class="{ 'side-menu__group-button--active': !selectedGroupId }"
@@ -30,7 +23,8 @@
         </a>
 
         <a
-          class="side-menu__group-button md:mt-5"
+          v-if="networkOnLine"
+          class="side-menu__group-button mt-5"
           @click="showCreateGroupModal"
         >
           <font-awesome-icon icon="plus" class="mx-2 text-gray-600" />
@@ -73,11 +67,12 @@ import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import AppImgLoader from '@/components/AppImgLoader.vue';
 import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
+import CreateContactButton from '@/components/contacts/CreateContactButton.vue';
 
 export default Vue.extend({
   name: 'SideMenu',
 
-  components: { AppImgLoader },
+  components: { AppImgLoader, CreateContactButton },
 
   data() {
     return {
@@ -86,7 +81,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState('app', ['isSideMenuOpen']),
+    ...mapState('app', ['networkOnLine', 'isSideMenuOpen']),
     ...mapState('groups', ['selectedGroupId']),
     ...mapGetters('groups', ['groups']),
     ...mapGetters('auth', ['username']),

@@ -4,14 +4,7 @@
     <create-contact-modal />
     <create-group-modal />
 
-    <button
-      type="button"
-      class="app__create-contact-button fixed md:hidden"
-      @click="showCreateContactModal"
-    >
-      <font-awesome-icon icon="plus" class="mx-2" />
-      Create contact
-    </button>
+    <create-contact-button class="mx-2 fixed md:hidden" />
   </div>
 </template>
 
@@ -21,10 +14,16 @@ import { mapActions } from 'vuex';
 import ContactsTable from '@/components/contacts/ContactsTable.vue';
 import CreateContactModal from '@/components/contacts/CreateContactModal.vue';
 import CreateGroupModal from '@/components/groups/GroupModal.vue';
+import CreateContactButton from '@/components/contacts/CreateContactButton.vue';
 
 export default Vue.extend({
   name: 'Home',
-  components: { ContactsTable, CreateContactModal, CreateGroupModal },
+  components: {
+    ContactsTable,
+    CreateContactButton,
+    CreateContactModal,
+    CreateGroupModal,
+  },
   methods: mapActions('modals', ['showCreateContactModal']),
 });
 </script>
