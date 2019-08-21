@@ -4,7 +4,7 @@
     <create-contact-modal />
     <create-group-modal />
 
-    <create-contact-button class="mx-2 fixed md:hidden" />
+    <create-contact-button class="fixed md:hidden" />
   </div>
 </template>
 
