@@ -1,6 +1,6 @@
 {
-  "name": "take-home",
-  "short_name": "take-home",
+  "name": "Contacts",
+  "short_name": "Contacts",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
@@ -15,6 +15,6 @@
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#000000",
+  "background_color": "#ffffff",
   "theme_color": "#44337a"
 }

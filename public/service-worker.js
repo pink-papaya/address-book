@@ -1,4 +1,4 @@
-workbox.core.setCacheNameDetails({ prefix: 'take-home' });
+workbox.core.setCacheNameDetails({ prefix: 'address-book' });
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
