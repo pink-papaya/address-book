@@ -3,10 +3,10 @@
     class="flex flex-col justify-center items-center w-full min-h-screen bg-gray-400 px-5 md:p-0"
   >
     <div
-      class="login__logo font-bold text-3xl text-center text-purple-900 mb-6"
+      class="login__logo font-bold text-3xl flex justify-center items-center text-purple-900 mb-6"
     >
-      <font-awesome-icon icon="address-book" />
-      <span class="">&nbsp;Address Book</span>
+      <img src="@/assets/icons/logo.svg" alt="logo" class="inline h-8 w-auto mr-2">
+      <span class="">Address Book</span>
     </div>
     <slot />
   </div>
