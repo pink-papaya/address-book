@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   /* See https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa for more details */
   pwa: {
-    themeColor: '#44337a',
+    themeColor: '#ffffff',
     appleMobileWebAppStatusBarStyle: 'black',
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
