@@ -3,7 +3,7 @@
     :disabled="!networkOnLine"
     :class="{ 'app__create-contact-button--offline': !networkOnLine }"
     type="button"
-    class="app__create-contact-button"
+    class="app__create-contact-button app__button app__button--outline"
     @click="showCreateContactModal"
   >
     <span class="flex items-center justify-center">
@@ -39,18 +39,12 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .app__create-contact-button {
-  @apply border-2 border-purple-900 text-purple-900 py-2 px-4 font-medium rounded;
-
-  &:disabled {
-    @apply cursor-not-allowed;
-  }
-
-  &:hover:not(&--offline) {
-    @apply bg-purple-900 text-white;
-  }
-
   &--offline {
     @apply border-gray-500 text-gray-500;
+
+    &:hover {
+      @apply bg-white text-gray-500;
+    }
   }
 }
 </style>

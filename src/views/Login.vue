@@ -23,7 +23,7 @@
           class="login__input"
         />
       </div>
-      <button :disabled="isLoggingIn" class="login__button" type="submit">
+      <button :disabled="isLoggingIn" class="app__button" type="submit">
         Log In
       </button>
       <div class="mt-6 text-gray-700">

@@ -23,7 +23,7 @@
           class="login__input"
         />
       </div>
-      <button class="login__button" type="submit">
+      <button class="app__button" type="submit">
         Sign Up
       </button>
       <div class="mt-6 text-gray-700">

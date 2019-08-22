@@ -5,7 +5,11 @@
     <div
       class="login__logo font-bold text-3xl flex justify-center items-center text-purple-900 mb-6"
     >
-      <img src="@/assets/icons/logo.svg" alt="logo" class="inline h-8 w-auto mr-2">
+      <img
+        src="@/assets/icons/logo.svg"
+        alt="logo"
+        class="inline h-8 w-auto mr-2"
+      />
       <span class="">Address Book</span>
     </div>
     <slot />
@@ -48,18 +52,6 @@ export default Vue.extend({
   @apply text-purple-900;
   &:hover {
     @apply text-purple-800 underline;
-  }
-}
-
-.login__button {
-  @apply shadow bg-purple-900 text-white font-bold py-2 px-4 rounded;
-
-  &:hover {
-    @apply bg-purple-800;
-  }
-
-  &:focus {
-    @apply shadow-outline outline-none;
   }
 }
 </style>

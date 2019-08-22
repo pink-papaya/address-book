@@ -48,4 +48,5 @@ export default {
 
     return filters.reduce((result, filter) => result.filter(filter), contacts);
   },
+  contactByName: state => (name: string) => state.contacts[name],
 } as GetterTree<ContactsState, RootState>;

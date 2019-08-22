@@ -19,22 +19,22 @@
           v-model.trim="$v.description.$model"
           :has-error="$v.description.$error"
           label="Description"
-          error="Description is required"
           type="textarea"
+          rows="4"
           class="mb-6"
         />
         <app-input
           v-model.trim="$v.pictureUrl.$model"
           :has-error="$v.pictureUrl.$error"
           label="Picture url"
-          error="Picture url is required"
+          error="Picture url must be a valid url"
           class="mb-6"
         />
       </form>
     </template>
 
     <template #footer>
-      <button class="login__button" type="submit" form="create-group-form">
+      <button class="app__button" type="submit" form="create-group-form">
         Save
       </button>
     </template>
@@ -44,7 +44,7 @@
 <script>
 import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
-import { required } from 'vuelidate/lib/validators';
+import { required, url } from 'vuelidate/lib/validators';
 import AppModal from '@/components/AppModal.vue';
 import AppInput from '@/components/AppInput.vue';
 
@@ -58,8 +58,8 @@ export default Vue.extend({
 
   validations: {
     name: { required },
-    description: { required },
-    pictureUrl: { required },
+    description: {},
+    pictureUrl: { url },
   },
 
   data() {
@@ -113,31 +113,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" scoped>
-.login__input {
-  @apply bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full
-  py-2 px-4 text-gray-700 leading-tight;
-
-  transition: all 0.25s;
-
-  &:focus {
-    @apply outline-none bg-white border-purple-500;
-  }
-}
-
-.login__label {
-  @apply block text-gray-700 font-bold mb-1;
-}
-
-.login__button {
-  @apply shadow bg-purple-900 text-white font-bold py-2 px-4 rounded;
-
-  &:hover {
-    @apply bg-purple-800;
-  }
-
-  &:focus {
-    @apply shadow-outline outline-none;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-5">
+  <div>
     <contacts-table />
     <create-contact-modal />
     <create-group-modal />

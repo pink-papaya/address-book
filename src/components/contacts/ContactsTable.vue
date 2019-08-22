@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5">
+  <div class="px-5 pt-5">
     <table class="w-full">
       <thead>
         <tr class="border-b">

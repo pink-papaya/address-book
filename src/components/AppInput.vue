@@ -9,6 +9,7 @@
       :value="value"
       :type="type"
       :class="{ 'app-input__input--has-error': hasError }"
+      v-bind="$attrs"
       class="app-input__input"
       @input="$emit('input', $event.target.value)"
     />
@@ -18,6 +19,7 @@
       :value="value"
       :type="type"
       :class="{ 'app-input__input--has-error': hasError }"
+      v-bind="$attrs"
       class="app-input__input"
       @input="$emit('input', $event.target.value)"
     />

@@ -88,6 +88,10 @@ export default Vue.extend({
   @screen md {
     @apply p-5;
   }
+
+  @screen xl {
+    @apply p-6;
+  }
 }
 
 .app-modal__header {
@@ -100,6 +104,10 @@ export default Vue.extend({
 
 .app-modal__body {
   @apply p-5 flex-1 overflow-y-auto;
+
+  @screen xl {
+    @apply p-6;
+  }
 }
 
 .app-modal__close-button {

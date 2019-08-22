@@ -36,8 +36,8 @@
         <app-input
           v-model.trim="$v.name.$model"
           :has-error="$v.name.$error"
+          :error="nameError"
           label="Name"
-          error="Name is required"
           class="mb-6"
         />
         <app-input
@@ -58,7 +58,7 @@
     </template>
 
     <template #footer>
-      <button class="login__button" type="submit" form="create-contact-form">
+      <button class="app__button" type="submit" form="create-contact-form">
         Save
       </button>
     </template>
@@ -68,12 +68,14 @@
 <script>
 import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
-import { required } from 'vuelidate/lib/validators';
+import { required, url } from 'vuelidate/lib/validators';
 import AppModal from '@/components/AppModal.vue';
 import AppInput from '@/components/AppInput.vue';
 import AppSelect from '@/components/AppSelect.vue';
 import AppImgLoader from '@/components/AppImgLoader.vue';
 import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
+
+const uniqueName = (value, vm) => !vm.contactByName(value);
 
 export default Vue.extend({
   name: 'CreateContactModal',
@@ -87,9 +89,9 @@ export default Vue.extend({
 
   validations: {
     groupId: { required },
-    name: { required },
+    name: { required, uniqueName },
     phone: { required },
-    pictureUrl: { required },
+    pictureUrl: { url },
   },
 
   data() {
@@ -105,6 +107,13 @@ export default Vue.extend({
   computed: {
     ...mapState('modals', ['isCreateContactModalOpen']),
     ...mapGetters('groups', ['groups']),
+    ...mapGetters('contacts', ['contactByName']),
+
+    nameError() {
+      return this.$v.name.$uniqueName
+        ? 'Name is required'
+        : "There's already a contact with that name";
+    },
   },
   methods: {
     ...mapActions('modals', ['hideCreateContactModal']),
@@ -146,31 +155,4 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" scoped>
-.login__input {
-  @apply bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full
-  py-2 px-4 text-gray-700 leading-tight;
-
-  transition: all 0.25s;
-
-  &:focus {
-    @apply outline-none bg-white border-purple-500;
-  }
-}
-
-.login__label {
-  @apply block text-gray-700 font-bold mb-1;
-}
-
-.login__button {
-  @apply shadow bg-purple-900 text-white font-bold py-2 px-4 rounded;
-
-  &:hover {
-    @apply bg-purple-800;
-  }
-
-  &:focus {
-    @apply shadow-outline outline-none;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
