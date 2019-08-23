@@ -89,7 +89,12 @@ import AppSelect from '@/components/AppSelect.vue';
 import AppImgLoader from '@/components/AppImgLoader.vue';
 import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
 
-const uniqueName = (value: string, vm: any) => !vm.contactByName(value);
+const uniqueName = (value: string, vm: any) => {
+  const contact = vm.contactByName(value);
+
+  // the contact can have it's original name
+  return !contact || contact.id === vm.contact.id;
+};
 
 export default Vue.extend({
   name: 'CreateContactModal',
