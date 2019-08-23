@@ -1,7 +1,7 @@
 import { MutationTree } from 'vuex';
 import { ModalsState } from '@/store/modals/types';
 
-export default {
+const mutations: MutationTree<ModalsState> = {
   setIsCreateContactModalOpen(state, value) {
     state.isCreateContactModalOpen = value;
   },
@@ -18,4 +18,6 @@ export default {
   setIsCreateGroupModalOpen(state, value) {
     state.isCreateGroupModalOpen = value;
   },
-} as MutationTree<ModalsState>;
+};
+
+export default mutations;

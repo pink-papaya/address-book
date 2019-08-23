@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { MutationTree } from 'vuex';
 import { Group, GroupMap, GroupsState } from '@/store/groups/types';
 
-export default {
+const mutations: MutationTree<GroupsState> = {
   storeGroups(state, groups: Group[]) {
     state.groups = groups.reduce(
       (acc, group) => {
@@ -24,4 +24,6 @@ export default {
   setSelectedGroupId(state, value?: string) {
     state.selectedGroupId = value;
   },
-} as MutationTree<GroupsState>;
+};
+
+export default mutations;

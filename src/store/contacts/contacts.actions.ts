@@ -4,7 +4,7 @@ import { Contact, ContactsState } from '@/store/contacts/types';
 import db from '@/db';
 import contactService from '@/services/contact.service';
 
-export default {
+const actions: ActionTree<ContactsState, RootState> = {
   async addContact({ commit, dispatch, rootGetters }, contact) {
     try {
       await (await db).add('contacts', contact);
@@ -57,4 +57,6 @@ export default {
       commit('setLoading', false);
     },
   },
-} as ActionTree<ContactsState, RootState>;
+};
+
+export default actions;

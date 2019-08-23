@@ -4,7 +4,7 @@ import { Group, GroupsState } from '@/store/groups/types';
 import db from '@/db';
 import groupService from '@/services/group.service';
 
-export default {
+const actions: ActionTree<GroupsState, RootState> = {
   async addGroup({ commit, dispatch, rootGetters }, group: Group) {
     await (await db).add('groups', group);
 
@@ -56,4 +56,6 @@ export default {
       commit('setLoading', false);
     },
   },
-} as ActionTree<GroupsState, RootState>;
+};
+
+export default actions;

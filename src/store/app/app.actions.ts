@@ -2,7 +2,7 @@ import { ActionTree } from 'vuex';
 import { RootState } from '@/store/types';
 import { AppState } from '@/store/app/types';
 
-export default {
+const actions: ActionTree<AppState, RootState> = {
   /**
    * Closes "add to home screen" modal for apple
    */
@@ -12,7 +12,7 @@ export default {
   },
 
   /**
-   * Trigger service worker skipWating so the new service worker can take over.
+   * Trigger service worker skipWaiting so the new service worker can take over.
    * This will also trigger a window refresh (see /src/misc/register-service-worker.js)
    */
   serviceWorkerSkipWaiting({ state, commit }) {
@@ -28,4 +28,6 @@ export default {
   toggleSideMenu({ state, commit }) {
     commit('setIsSideMenuOpen', !state.isSideMenuOpen);
   },
-} as ActionTree<AppState, RootState>;
+};
+
+export default actions;

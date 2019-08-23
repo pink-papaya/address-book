@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <app-layout>
     <contacts-table />
     <create-contact-modal />
     <view-contact-modal />
     <create-group-modal />
 
     <create-contact-button class="fixed md:hidden" />
-  </div>
+  </app-layout>
 </template>
 
 <script lang="ts">
@@ -17,10 +17,12 @@ import CreateContactModal from '@/components/contacts/CreateContactModal.vue';
 import CreateGroupModal from '@/components/groups/GroupModal.vue';
 import CreateContactButton from '@/components/contacts/CreateContactButton.vue';
 import ViewContactModal from '@/components/contacts/ViewContactModal.vue';
+import AppLayout from '@/components/layouts/AppLayout.vue';
 
 export default Vue.extend({
   name: 'Home',
   components: {
+    AppLayout,
     ContactsTable,
     CreateContactButton,
     CreateContactModal,

@@ -7,6 +7,9 @@ import {
   faUsers,
   faPlus,
   faTimes,
+  faSpinner,
+  faPen,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vuelidate from 'vuelidate';
@@ -24,6 +27,9 @@ library.add(faSearch);
 library.add(faUsers);
 library.add(faPlus);
 library.add(faTimes);
+library.add(faSpinner);
+library.add(faPen);
+library.add(faTrash);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

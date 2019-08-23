@@ -11,17 +11,9 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      name: 'home',
       component: () =>
-        import(
-          /* webpackChunkName: "main-app" */ '@/components/layouts/AppLayout.vue'
-        ),
-      children: [
-        {
-          path: '/',
-          name: 'home',
-          component: Home,
-        },
-      ],
+        import(/* webpackChunkName: "main-app" */ '@/views/Home.vue'),
       meta: {
         requiresAuth: true,
       },
@@ -56,11 +48,7 @@ router.beforeEach((to, from, next) => {
     to.matched.some(route => route.meta.requiresAuth) &&
     !store.getters['auth/isUserLoggedIn']
   ) {
-    const path = !store.getters['auth/isUserLoggedIn']
-      ? '/login'
-      : '/check-login';
-
-    return next(`${path}?redirectUrl=${to.path}`);
+    return next('/login');
   }
 
   if (

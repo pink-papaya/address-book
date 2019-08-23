@@ -19,7 +19,7 @@
           @click="setGroup(undefined)"
         >
           <font-awesome-icon icon="users" class="mx-2 text-gray-600" />
-          <span class="text-gray-900">All contacts</span>
+          <span class="group-button__label">All contacts</span>
         </a>
 
         <a
@@ -28,7 +28,7 @@
           @click="showCreateGroupModal"
         >
           <font-awesome-icon icon="plus" class="mx-2 text-gray-600" />
-          <span class="text-gray-900">Create group</span>
+          <span class="group-button__label">Create group</span>
         </a>
 
         <span class="mt-1 text-gray-900 font-medium">Groups</span>
@@ -47,9 +47,21 @@
               :src="group.pictureUrl"
               :placeholder-src="groupImgPlaceholder"
               alt=""
-              class="h-8 w-8 inline mr-2 object-cover rounded-full"
+              class="h-8 w-8 mr-2 object-cover rounded-full"
             />
-            <span class="text-gray-900">{{ group.name }}</span>
+            <span class="group-button__label">{{ group.name }}</span>
+            <span class="group-button__actions">
+              <font-awesome-icon
+                icon="pen"
+                class="group-button__action mr-3 fa-sm"
+                @click.stop="editGroup(group.id)"
+              />
+              <font-awesome-icon
+                icon="trash"
+                class="group-button__action fa-sm"
+                @click.stop="deleteGroup(group.id)"
+              />
+            </span>
           </a>
         </div>
       </div>
@@ -100,6 +112,11 @@ export default Vue.extend({
         this.toggleSideMenu();
       }
     },
+
+    editGroup() {
+    },
+    deleteGroup() {
+    },
   },
 });
 </script>
@@ -125,13 +142,40 @@ export default Vue.extend({
 }
 
 .side-menu__group-button {
-  @apply py-2 text-left font-medium rounded cursor-pointer;
+  @apply py-2 text-left font-medium rounded cursor-pointer flex items-center relative;
   &:hover:not(&--active) {
-    @apply bg-gray-200;
+    &,
+    & .group-button__actions {
+      @apply bg-gray-200;
+    }
   }
 
   &--active {
-    @apply bg-purple-200;
+    &,
+    & .group-button__actions {
+      @apply bg-purple-200;
+    }
   }
+}
+
+.group-button__label {
+  @apply text-gray-900 truncate inline-block flex-1;
+}
+
+.group-button__actions {
+  @apply absolute inline-block text-gray-600 bg-white pl-1;
+  right: theme('width.2');
+
+  @screen md {
+    @apply hidden;
+
+    .side-menu__group-button:hover & {
+      @apply inline-block;
+    }
+  }
+}
+
+.group-button__action:hover {
+  @apply text-purple-600;
 }
 </style>

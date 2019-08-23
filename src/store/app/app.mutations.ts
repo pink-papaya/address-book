@@ -1,7 +1,7 @@
 import { MutationTree } from 'vuex';
 import { AppState } from '@/store/app/types';
 
-export default {
+const mutations: MutationTree<AppState> = {
   setNetworkOnline(state, value) {
     state.networkOnLine = value;
   },
@@ -17,4 +17,6 @@ export default {
   setIsSideMenuOpen(state, value) {
     state.isSideMenuOpen = value;
   },
-} as MutationTree<AppState>;
+};
+
+export default mutations;

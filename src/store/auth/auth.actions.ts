@@ -6,7 +6,7 @@ import addressBookService from '@/services/addressBook.service';
 
 const sessionKey = 'address-book-session';
 
-export default {
+const actions: ActionTree<AuthState, RootState> = {
   register(context, { username, password }) {
     return addressBookService.create(username, password);
   },
@@ -52,4 +52,6 @@ export default {
       }
     },
   },
-} as ActionTree<AuthState, RootState>;
+};
+
+export default actions;

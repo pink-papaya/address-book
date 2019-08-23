@@ -7,7 +7,7 @@
       :class="{ 'app__container--open': isSideMenuOpen }"
       class="app__container"
     >
-      <router-view />
+      <slot />
     </main>
   </div>
 </template>

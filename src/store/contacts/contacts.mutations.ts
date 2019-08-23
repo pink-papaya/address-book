@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { MutationTree } from 'vuex';
 import { Contact, ContactMap, ContactsState } from '@/store/contacts/types';
 
-export default {
+const mutations: MutationTree<ContactsState> = {
   addContact(state, contact: Contact) {
     Vue.set(state.contacts, contact.name, contact);
   },
@@ -24,4 +24,6 @@ export default {
   setSearchQuery(state, value: string) {
     state.searchQuery = value;
   },
-} as MutationTree<ContactsState>;
+};
+
+export default mutations;

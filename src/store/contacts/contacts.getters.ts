@@ -2,7 +2,7 @@ import { GetterTree } from 'vuex';
 import { RootState } from '@/store/types';
 import { Contact, ContactsState, DynamicContact } from '@/store/contacts/types';
 
-export default {
+const getters: GetterTree<ContactsState, RootState> = {
   contacts: (
     state,
     getters,
@@ -49,4 +49,6 @@ export default {
     return filters.reduce((result, filter) => result.filter(filter), contacts);
   },
   contactByName: state => (name: string) => state.contacts[name],
-} as GetterTree<ContactsState, RootState>;
+};
+
+export default getters;
