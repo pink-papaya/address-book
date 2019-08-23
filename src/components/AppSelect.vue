@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import VSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';

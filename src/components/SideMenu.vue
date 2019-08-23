@@ -16,7 +16,7 @@
         <a
           :class="{ 'side-menu__group-button--active': !selectedGroupId }"
           class="side-menu__group-button md:mt-5"
-          @click="selectGroup(undefined)"
+          @click="setGroup(undefined)"
         >
           <font-awesome-icon icon="users" class="mx-2 text-gray-600" />
           <span class="text-gray-900">All contacts</span>
@@ -41,7 +41,7 @@
               'side-menu__group-button--active': selectedGroupId === group.id,
             }"
             class="mt-1 p-2 side-menu__group-button"
-            @click="selectGroup(group.id)"
+            @click="setGroup(group.id)"
           >
             <app-img-loader
               :src="group.pictureUrl"
@@ -92,6 +92,14 @@ export default Vue.extend({
     ...mapActions('auth', ['logout']),
     ...mapActions('modals', ['showCreateContactModal', 'showCreateGroupModal']),
     ...mapActions('groups', ['selectGroup']),
+
+    setGroup(groupId?: string) {
+      this.selectGroup(groupId);
+
+      if (window.innerWidth <= 768 && this.isSideMenuOpen) {
+        this.toggleSideMenu();
+      }
+    },
   },
 });
 </script>

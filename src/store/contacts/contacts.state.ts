@@ -1,7 +1,9 @@
 import { ContactsState } from '@/store/contacts/types';
 
-export default {
+const state: ContactsState = {
   contacts: {},
   isLoading: false,
   searchQuery: '',
-} as ContactsState;
+};
+
+export default state;

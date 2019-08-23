@@ -2,54 +2,67 @@ import { ActionTree } from 'vuex';
 import { RootState } from '@/store/types';
 import { ModalsState } from '@/store/modals/types';
 import router from '@/router';
+import { Contact } from '@/store/contacts/types';
 
-const contactsHistoryKey = 'contacts-modal-state';
-const groupsHistoryKey = 'groups-modal-state';
+const editContactHistoryKey = 'contact-modal-state';
+const viewContactsHistoryKey = 'view-contact-modal-state';
+const editGroupHistoryKey = 'group-modal-state';
+
+const storeHistoryKey = (historyKey: string) => {
+  window.history.replaceState(
+    { ...(history.state || {}), historyKey },
+    document.title,
+  );
+  window.history.pushState({}, document.title);
+};
 
 export default {
-  showCreateContactModal({ commit, dispatch }) {
+  showCreateContactModal({ commit }, contact?: Contact) {
     commit('setIsCreateContactModalOpen', true);
-    window.history.replaceState(
-      { ...(history.state || {}), historyKey: contactsHistoryKey },
-      document.title,
-    );
-    window.history.pushState({}, document.title);
+    commit('setContactModalModel', contact);
+
+    storeHistoryKey(editContactHistoryKey);
   },
-  hideCreateContactModal({ state, commit }) {
+  hideCreateContactModal({ commit }) {
     commit('setIsCreateContactModalOpen', false);
     router.go(-1);
   },
 
-  showCreateGroupModal({ commit, dispatch }) {
-    commit('setIsCreateGroupModalOpen', true);
-    window.history.replaceState(
-      { ...(history.state || {}), historyKey: groupsHistoryKey },
-      document.title,
-    );
-    window.history.pushState({}, document.title);
+  showViewContactModal({ commit }, contact?: Contact) {
+    commit('setIsViewContactModalOpen', true);
+    commit('setContactModalModel', contact);
+
+    storeHistoryKey(editContactHistoryKey);
   },
-  hideCreateGroupModal({ state, commit }) {
+  hideViewContactModal({ commit }) {
+    commit('setIsViewContactModalOpen', false);
+    router.go(-1);
+  },
+
+  showCreateGroupModal({ commit }) {
+    commit('setIsCreateGroupModalOpen', true);
+
+    storeHistoryKey(editGroupHistoryKey);
+  },
+  hideCreateGroupModal({ commit }) {
     commit('setIsCreateGroupModalOpen', false);
     router.go(-1);
   },
 
   init: {
     root: true,
-    handler({ state, commit }) {
+    handler({ commit }) {
       window.addEventListener('popstate', event => {
         const mutationMap = {
-          [contactsHistoryKey]: 'setIsCreateContactModalOpen',
-          [groupsHistoryKey]: 'setIsCreateGroupModalOpen',
+          [editContactHistoryKey]: 'setIsCreateContactModalOpen',
+          [viewContactsHistoryKey]: 'setIsViewContactModalOpen',
+          [editGroupHistoryKey]: 'setIsCreateGroupModalOpen',
         };
 
-        if (
-          event.state &&
-          mutationMap[event.state.historyKey as keyof typeof mutationMap]
-        ) {
-          commit(
-            mutationMap[event.state.historyKey as keyof typeof mutationMap],
-            false,
-          );
+        const key: keyof typeof mutationMap = event.state.historyKey;
+
+        if (event.state && mutationMap[key]) {
+          commit(mutationMap[key], false);
         }
       });
     },

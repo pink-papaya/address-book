@@ -1,6 +1,11 @@
 import { ModalsState } from '@/store/modals/types';
 
-export default {
+const state: ModalsState = {
   isCreateContactModalOpen: false,
+  isViewContactModalOpen: false,
   isCreateGroupModalOpen: false,
-} as ModalsState;
+  contactModalMode: undefined,
+  contactModalModel: undefined,
+};
+
+export default state;

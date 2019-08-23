@@ -10,13 +10,15 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   name: 'NewContentAvailableToastr',
   props: {
     refreshingApp: Boolean,
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

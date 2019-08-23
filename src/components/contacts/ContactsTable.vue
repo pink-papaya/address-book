@@ -31,19 +31,12 @@
         </tr>
       </transition-group>
     </table>
-
-    <app-modal
-      v-show="activeContact"
-      mobile-full-screen
-      @close="activeContact = null"
-    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
-import AppModal from '@/components/AppModal.vue';
+import { mapActions, mapGetters } from 'vuex';
 import { Contact } from '@/store/contacts/types';
 import AppImgLoader from '@/components/AppImgLoader.vue';
 import * as contactImgPlaceholder from '@/assets/img/contact-default-photo.png';
@@ -51,7 +44,7 @@ import * as contactImgPlaceholder from '@/assets/img/contact-default-photo.png';
 export default Vue.extend({
   name: 'ContactsTable',
 
-  components: { AppModal, AppImgLoader },
+  components: { AppImgLoader },
 
   data() {
     return {
@@ -67,8 +60,9 @@ export default Vue.extend({
   },
 
   methods: {
+    ...mapActions('modals', ['showViewContactModal']),
     showDetails(contact: Contact) {
-      this.activeContact = contact;
+      this.showViewContactModal(contact);
     },
   },
 });

@@ -2,6 +2,7 @@
   <div>
     <contacts-table />
     <create-contact-modal />
+    <view-contact-modal />
     <create-group-modal />
 
     <create-contact-button class="fixed md:hidden" />
@@ -15,6 +16,7 @@ import ContactsTable from '@/components/contacts/ContactsTable.vue';
 import CreateContactModal from '@/components/contacts/CreateContactModal.vue';
 import CreateGroupModal from '@/components/groups/GroupModal.vue';
 import CreateContactButton from '@/components/contacts/CreateContactButton.vue';
+import ViewContactModal from '@/components/contacts/ViewContactModal.vue';
 
 export default Vue.extend({
   name: 'Home',
@@ -22,6 +24,7 @@ export default Vue.extend({
     ContactsTable,
     CreateContactButton,
     CreateContactModal,
+    ViewContactModal,
     CreateGroupModal,
   },
   methods: mapActions('modals', ['showCreateContactModal']),

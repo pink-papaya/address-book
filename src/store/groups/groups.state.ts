@@ -1,7 +1,9 @@
 import { GroupsState } from '@/store/groups/types';
 
-export default {
+const state: GroupsState = {
   groups: {},
   isLoading: false,
   selectedGroupId: undefined,
-} as GroupsState;
+};
+
+export default state;

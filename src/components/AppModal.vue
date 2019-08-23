@@ -2,6 +2,7 @@
   <transition name="modal-fade">
     <div class="app-modal__backdrop" @click.self="close">
       <div
+        :class="{ 'app-modal--mobile-fullscreen': mobileFullScreen }"
         class="app-modal"
         role="dialog"
         aria-labelledby="modalTitle"
@@ -74,10 +75,14 @@ export default Vue.extend({
 }
 
 .app-modal {
-  @apply flex flex-col shadow-lg bg-white fixed inset-0 overflow-x-auto rounded max-h-screen;
+  @apply flex flex-col shadow-lg bg-white fixed w-full max-w-sm overflow-x-auto rounded max-h-screen;
+
+  &--mobile-fullscreen {
+    @apply inset-0 max-w-full;
+  }
 
   @screen md {
-    @apply fixed inset-auto w-full max-w-3xl;
+    @apply inset-auto w-full max-w-3xl;
   }
 }
 

@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script lnag="ts">
+<script lang="ts">
 import Vue from 'vue';
 import { mapState } from 'vuex';
 

@@ -8,7 +8,7 @@
 
     <div class="font-bold text-3xl text-left md:max-w-xs md:w-full">
       <font-awesome-icon icon="address-book" />
-      <span class="hidden md:inline">&nbsp;Address Book</span>
+      <h1 class="hidden md:inline">&nbsp;Address Book</h1>
     </div>
 
     <div class="mx-5 relative flex-1">

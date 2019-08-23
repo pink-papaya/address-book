@@ -1,5 +1,9 @@
 <template>
-  <app-modal v-show="isCreateContactModalOpen" @close="close">
+  <app-modal
+    v-show="isCreateContactModalOpen"
+    mobile-full-screen
+    @close="close"
+  >
     <template #header>
       <div class="font-medium">
         Create contact
@@ -51,13 +55,21 @@
           v-model.trim="$v.pictureUrl.$model"
           :has-error="$v.pictureUrl.$error"
           label="Picture url"
-          error="Picture url is required"
+          error="Picture url must be a valid url"
           class="mb-6"
         />
       </form>
     </template>
 
     <template #footer>
+      <button
+        class="app__button app__button--outline mr-5"
+        type="button"
+        @click="close"
+      >
+        Cancel
+      </button>
+
       <button class="app__button" type="submit" form="create-contact-form">
         Save
       </button>
@@ -65,7 +77,7 @@
   </app-modal>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { required, url } from 'vuelidate/lib/validators';
@@ -75,7 +87,7 @@ import AppSelect from '@/components/AppSelect.vue';
 import AppImgLoader from '@/components/AppImgLoader.vue';
 import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
 
-const uniqueName = (value, vm) => !vm.contactByName(value);
+const uniqueName = (value: string, vm: any) => !vm.contactByName(value);
 
 export default Vue.extend({
   name: 'CreateContactModal',
@@ -110,6 +122,7 @@ export default Vue.extend({
     ...mapGetters('contacts', ['contactByName']),
 
     nameError() {
+      // @ts-ignore
       return this.$v.name.$uniqueName
         ? 'Name is required'
         : "There's already a contact with that name";
@@ -120,25 +133,31 @@ export default Vue.extend({
     ...mapActions('contacts', ['addContact']),
 
     close() {
+      // @ts-ignore
       this.hideCreateContactModal();
 
       this.groupId = '';
       this.name = '';
       this.phone = '';
       this.pictureUrl = '';
+      // @ts-ignore
       this.$v.$reset();
     },
 
     async createContact() {
       const { groupId, name, phone, pictureUrl } = this;
 
+      // @ts-ignore
       this.$v.$touch();
 
       if (this.$v.$invalid) {
         return;
       }
 
+      this.close();
+
       try {
+        // @ts-ignore
         await this.addContact({
           groupId,
           name,
@@ -148,8 +167,6 @@ export default Vue.extend({
       } catch (e) {
         console.log(e);
       }
-
-      this.close();
     },
   },
 });

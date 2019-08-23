@@ -2,7 +2,7 @@
   <img :src="imageSrc" />
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 
 export default Vue.extend({
@@ -22,12 +22,12 @@ export default Vue.extend({
   data() {
     return {
       isLoaded: false,
-      img: null,
+      img: null as HTMLImageElement | null,
     };
   },
 
   computed: {
-    imageSrc() {
+    imageSrc(): string {
       return this.isLoaded ? this.src : this.placeholderSrc;
     },
   },
@@ -61,7 +61,7 @@ export default Vue.extend({
       this.destroyLoader();
       this.$emit('onLoad');
     },
-    handleError(error) {
+    handleError(error: string | Event) {
       this.destroyLoader();
       this.$emit('onError', error);
     },

@@ -1,5 +1,7 @@
 import { AuthState } from '@/store/auth/types';
 
-export default {
+const state: AuthState = {
   addressBook: undefined,
-} as AuthState;
+};
+
+export default state;

@@ -1,5 +1,5 @@
 <template>
-  <app-modal v-show="isCreateGroupModalOpen" @close="close">
+  <app-modal v-show="isCreateGroupModalOpen" mobile-full-screen @close="close">
     <template #header>
       <div class="font-medium">
         Create contact
@@ -41,7 +41,7 @@
   </app-modal>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { required, url } from 'vuelidate/lib/validators';
@@ -84,10 +84,13 @@ export default Vue.extend({
       this.name = '';
       this.description = '';
       this.pictureUrl = '';
+
+      // @ts-ignore
       this.$v.$reset();
     },
 
     async createGroup() {
+      // @ts-ignore
       this.$v.$touch();
 
       if (this.$v.$invalid) {
