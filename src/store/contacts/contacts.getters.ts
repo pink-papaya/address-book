@@ -3,12 +3,7 @@ import { RootState } from '@/store/types';
 import { Contact, ContactsState, DynamicContact } from '@/store/contacts/types';
 
 const getters: GetterTree<ContactsState, RootState> = {
-  contacts: (
-    state,
-    getters,
-    rootState,
-    { 'groups/groupById': groupById },
-  ) =>
+  contacts: (state, getters, rootState, { 'groups/groupById': groupById }) =>
     Object.values(state.contacts)
       .map(contact => {
         const group = groupById(contact.groupId);

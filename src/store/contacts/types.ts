@@ -21,6 +21,4 @@ export interface ContactsState {
   contacts: ContactMap;
   isLoading: boolean;
   searchQuery: string;
-
-  form: ContactsFormState;
 }

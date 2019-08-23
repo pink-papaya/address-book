@@ -42,7 +42,11 @@
         Cancel
       </button>
 
-      <button class="app__button app__button--sm" type="submit" form="create-group-form">
+      <button
+        class="app__button app__button--sm"
+        type="submit"
+        form="create-group-form"
+      >
         Save
       </button>
     </template>

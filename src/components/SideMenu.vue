@@ -113,10 +113,8 @@ export default Vue.extend({
       }
     },
 
-    editGroup() {
-    },
-    deleteGroup() {
-    },
+    editGroup() {},
+    deleteGroup() {},
   },
 });
 </script>

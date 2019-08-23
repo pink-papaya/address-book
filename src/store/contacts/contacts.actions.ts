@@ -5,23 +5,29 @@ import db from '@/db';
 import contactService from '@/services/contact.service';
 
 const actions: ActionTree<ContactsState, RootState> = {
-  async saveContact({ dispatch, getters }) {
+  async saveContact({ dispatch, getters }, contact) {
     return getters['form/isEdit']
-      ? dispatch('updateContact')
-      : dispatch('addContact');
+      ? dispatch('updateContact', contact)
+      : dispatch('addContact', contact);
   },
 
   async addContact({ commit, dispatch, rootGetters }, contact) {
     try {
-      await (await db).add('contacts', contact);
+      // idb can't handle undefined as the keypath value
+      delete contact.id;
+
+      contact.id = await (await db).add('contacts', contact);
     } catch (e) {
-      throw new Error('Contact name already exists');
+      throw new Error('Database error');
     }
 
     commit('addContact', contact);
 
     try {
-      await contactService.create(rootGetters['auth/addressBookId'], contact);
+      await contactService.create(rootGetters['auth/addressBookId'], {
+        ...contact,
+        id: undefined,
+      });
     } catch (e) {
       /* @todo: show error notification */
       dispatch('rollBackCreate', contact);
@@ -33,8 +39,7 @@ const actions: ActionTree<ContactsState, RootState> = {
     commit('deleteContact', contact);
   },
 
-  async updateContact({ commit, dispatch, getters, rootGetters }) {
-    const contact = { ...getters['form/contact'] };
+  async updateContact({ commit, dispatch, getters, rootGetters }, contact) {
     const originalContact = getters.contactById(contact.id);
 
     await (await db).put('contacts', contact);

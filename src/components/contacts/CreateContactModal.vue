@@ -11,11 +11,7 @@
     </template>
 
     <template #body>
-      <form
-        id="create-contact-form"
-        class="w-full"
-        @submit.prevent="save"
-      >
+      <form id="create-contact-form" class="w-full" @submit.prevent="save">
         <!-- v-if is needed here or else v-select may not load the value correctly -->
         <app-select
           v-if="isCreateContactModalOpen"
@@ -120,7 +116,7 @@ export default Vue.extend({
 
   computed: {
     ...mapState('modals', ['isCreateContactModalOpen']),
-    ...mapGetters('contacts/form', ['isEdit']),
+    ...mapGetters('contacts/form', ['isEdit', 'contact']),
     ...mapGetters('groups', ['groups']),
     ...mapGetters('contacts', ['contactByName']),
 
@@ -192,11 +188,16 @@ export default Vue.extend({
       }
 
       // @ts-ignore
-      this.saveContact().catch(error => {
-        console.log(error);
-      });
+      const contact = { ...this.contact };
 
       this.close();
+
+      try {
+        // @ts-ignore
+        await this.saveContact(contact);
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 });
