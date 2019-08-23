@@ -6,7 +6,7 @@ import contactService from '@/services/contact.service';
 
 const actions: ActionTree<ContactsState, RootState> = {
   async saveContact({ dispatch, getters }, contact) {
-    return getters['form/isEdit']
+    return contact.id
       ? dispatch('updateContact', contact)
       : dispatch('addContact', contact);
   },
