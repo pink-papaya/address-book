@@ -1,5 +1,5 @@
 <template>
-  <app-modal v-show="isViewContactModalOpen" @close="close">
+  <app-modal v-if="isViewContactModalOpen" @close="close">
     <template #header>
       <div class="font-medium">
         Contact details
@@ -8,16 +8,16 @@
 
     <template #body>
       <div v-if="contact">
-        <div class="mb-5">
+        <div class="flex items-center mb-5">
           <app-img-loader
             :src="contact.pictureUrl"
             :placeholder-src="contactImgPlaceholder"
             class="h-24 w-24 rounded-full object-cover inline mr-5"
           />
-          <span class="text-2xl font-medium">{{ contact.name }}</span>
+          <div class="text-2xl font-medium break-all">{{ contact.name }}</div>
         </div>
 
-        <div v-if="group" class="mb-5">
+        <div v-if="group" class="flex items-center mb-5">
           <span class="font-medium inline-block w-12 text-gray-800 mr-5">
             Group
           </span>
@@ -27,13 +27,13 @@
             alt=""
             class="h-10 w-10 inline mr-2 object-cover rounded-full"
           />
-          <span class=" font-medium">{{ group.name }}</span>
+          <div class="break-all font-medium">{{ group.name }}</div>
         </div>
-        <div>
+        <div class="flex items-center">
           <span class="font-medium inline-block w-12 text-gray-800 mr-5">
             Phone
           </span>
-          {{ contact.phone }}
+          <div class="break-all">{{ contact.phone }}</div>
         </div>
       </div>
     </template>
@@ -115,7 +115,8 @@ export default Vue.extend({
       this.showCreateContactModal(this.contact);
     },
 
-    deleteContact() {},
+    deleteContact() {
+    },
   },
 });
 </script>
