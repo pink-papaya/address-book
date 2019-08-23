@@ -8,7 +8,7 @@
 
     <template #body>
       <div v-if="contact">
-        <div class="pb-5">
+        <div class="mb-5">
           <app-img-loader
             :src="contact.pictureUrl"
             :placeholder-src="contactImgPlaceholder"
@@ -17,7 +17,10 @@
           <span class="text-2xl font-medium">{{ contact.name }}</span>
         </div>
 
-        <div v-if="group">
+        <div v-if="group" class="mb-5">
+          <span class="font-medium inline-block w-12 text-gray-800 mr-5">
+            Group
+          </span>
           <app-img-loader
             :src="group.pictureUrl"
             :placeholder-src="groupImgPlaceholder"
@@ -27,17 +30,27 @@
           <span class=" font-medium">{{ group.name }}</span>
         </div>
         <div>
-          <span class="font-medium">Phone</span>
+          <span class="font-medium inline-block w-12 text-gray-800 mr-5">
+            Phone
+          </span>
           {{ contact.phone }}
         </div>
       </div>
     </template>
 
     <template #footer>
-      <button class="app__button mr-5" type="button">
+      <button
+        class="app__button app__button--sm app__button--outline mr-5"
+        type="button"
+        @click="deleteContact"
+      >
         Delete
       </button>
-      <button class="app__button" type="button">
+      <button
+        class="app__button app__button--sm"
+        type="button"
+        @click="editContact"
+      >
         Edit
       </button>
     </template>
@@ -47,14 +60,15 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
-import { required, url } from 'vuelidate/lib/validators';
 import AppModal from '@/components/AppModal.vue';
 import AppImgLoader from '@/components/AppImgLoader.vue';
 import * as contactImgPlaceholder from '@/assets/img/contact-default-photo.png';
 import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
+import { Group } from '@/store/groups/types';
+import { Contact } from '@/store/contacts/types';
 
 export default Vue.extend({
-  name: 'CreateContactModal',
+  name: 'ViewContactModal',
 
   components: {
     AppModal,
@@ -71,23 +85,37 @@ export default Vue.extend({
   computed: {
     ...mapState('modals', {
       isViewContactModalOpen: 'isViewContactModalOpen',
-      contact: 'contactModalModel',
+      contactId: 'contactModalModelId',
     }),
-    ...mapGetters('groups', ['getGroupById']),
+    ...mapGetters('contacts', ['contactById']),
+    ...mapGetters('groups', ['groupById']),
 
-    group() {
+    contact(): Contact {
       // @ts-ignore
-      return this.getGroupById(this.contact.groupId);
+      return this.contactById(this.contactId);
+    },
+
+    group(): Group {
+      // @ts-ignore
+      return this.groupById(this.contact.groupId);
     },
   },
   methods: {
-    ...mapActions('modals', ['hideViewContactModal']),
+    ...mapActions('modals', ['hideViewContactModal', 'showCreateContactModal']),
     ...mapActions('contacts', ['addContact']),
 
     close() {
       // @ts-ignore
       this.hideViewContactModal();
     },
+
+    editContact() {
+      // this.close();
+      // @ts-ignore
+      this.showCreateContactModal(this.contact);
+    },
+
+    deleteContact() {},
   },
 });
 </script>

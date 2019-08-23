@@ -7,11 +7,11 @@ const getters: GetterTree<ContactsState, RootState> = {
     state,
     getters,
     rootState,
-    { 'groups/getGroupById': getGroupById },
+    { 'groups/groupById': groupById },
   ) =>
     Object.values(state.contacts)
       .map(contact => {
-        const group = getGroupById(contact.groupId);
+        const group = groupById(contact.groupId);
 
         return {
           groupName: (group && group.name) || contact.groupId,
@@ -41,14 +41,19 @@ const getters: GetterTree<ContactsState, RootState> = {
           'groupName',
         ];
         return searchableKeys.some(key =>
-          searchFn(contact[key] || '', searchQuery),
+          searchFn((contact[key] as string) || '', searchQuery),
         );
       });
     }
 
     return filters.reduce((result, filter) => result.filter(filter), contacts);
   },
-  contactByName: state => (name: string) => state.contacts[name],
+  contactByName: (state, getters) => (name: string) =>
+    getters.contacts.find(
+      (contact: DynamicContact) =>
+        contact.name.toLowerCase() === name.toLowerCase(),
+    ),
+  contactById: state => (id: number) => state.contacts[id],
 };
 
 export default getters;

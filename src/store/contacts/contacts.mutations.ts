@@ -9,10 +9,13 @@ const mutations: MutationTree<ContactsState> = {
   deleteContact(state, contact: Contact) {
     Vue.delete(state.contacts, contact.name);
   },
+  updateContact(state, { id, contact }: { id: number; contact: Contact }) {
+    state.contacts[id] = contact;
+  },
   storeContacts(state, contacts: Contact[]) {
     state.contacts = contacts.reduce(
       (acc, contact) => {
-        acc[contact.name] = contact;
+        acc[contact.id!] = contact;
         return acc;
       },
       {} as ContactMap,

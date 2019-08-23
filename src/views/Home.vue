@@ -1,8 +1,8 @@
 <template>
   <app-layout>
     <contacts-table />
-    <create-contact-modal />
     <view-contact-modal />
+    <create-contact-modal />
     <create-group-modal />
 
     <create-contact-button class="fixed md:hidden" />

@@ -1,14 +1,28 @@
 import api from '@/http/api';
-import { AddressBook } from '@/services/types';
-import { Contact } from '@/store/contacts/types';
+import { ApiContact, Contact } from '@/store/contacts/types';
 
-class AddressBookService {
+class ContactService {
   public async create(
     addressBookId: string,
     contact: Contact,
-  ): Promise<Contact> {
+  ): Promise<ApiContact> {
     return api.post(`/${addressBookId}/contacts`, contact);
+  }
+
+  public async update(
+    addressBookId: string,
+    originalName: ApiContact['name'],
+    contact: ApiContact,
+  ): Promise<number> {
+    return api.put(`/${addressBookId}/contacts/${originalName}`, contact);
+  }
+
+  public async delete(
+    addressBookId: string,
+    contact: Contact,
+  ): Promise<number> {
+    return api.delete(`/${addressBookId}/contacts/${contact.name}`);
   }
 }
 
-export default new AddressBookService();
+export default new ContactService();

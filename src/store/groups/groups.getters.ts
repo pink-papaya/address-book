@@ -4,7 +4,7 @@ import { GroupsState } from '@/store/groups/types';
 
 const getters: GetterTree<GroupsState, RootState> = {
   groups: state => Object.values(state.groups),
-  getGroupById: state => (id: string) => state.groups[id],
+  groupById: state => (id: string) => state.groups[id],
   selectedGroup: state =>
     state.selectedGroupId && state.groups[state.selectedGroupId],
 };

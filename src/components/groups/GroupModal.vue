@@ -34,7 +34,15 @@
     </template>
 
     <template #footer>
-      <button class="app__button" type="submit" form="create-group-form">
+      <button
+        class="app__button app__button--sm app__button--outline mr-5"
+        type="button"
+        @click="close"
+      >
+        Cancel
+      </button>
+
+      <button class="app__button app__button--sm" type="submit" form="create-group-form">
         Save
       </button>
     </template>

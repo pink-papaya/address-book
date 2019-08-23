@@ -91,7 +91,7 @@ export default Vue.extend({
   @apply py-3 px-5 flex;
 
   @screen md {
-    @apply p-5;
+    @apply py-4;
   }
 
   @screen xl {

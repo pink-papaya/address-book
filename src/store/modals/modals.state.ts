@@ -4,8 +4,7 @@ const state: ModalsState = {
   isCreateContactModalOpen: false,
   isViewContactModalOpen: false,
   isCreateGroupModalOpen: false,
-  contactModalMode: undefined,
-  contactModalModel: undefined,
+  contactModalModelId: undefined,
 };
 
 export default state;

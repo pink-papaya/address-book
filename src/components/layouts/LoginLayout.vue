@@ -10,7 +10,7 @@
         alt="logo"
         class="inline h-8 w-auto mr-2"
       />
-      <span class="">Address Book</span>
+      <h1 class="">Address Book</h1>
     </div>
     <slot />
   </div>

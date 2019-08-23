@@ -2,6 +2,9 @@ import { MutationTree } from 'vuex';
 import { ContactsFormState } from '@/store/contacts/form/types';
 
 const mutations: MutationTree<ContactsFormState> = {
+  setId(state, value: number) {
+    state.id = value;
+  },
   setGroupId(state, value: string) {
     state.groupId = value;
   },

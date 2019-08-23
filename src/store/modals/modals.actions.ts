@@ -17,9 +17,9 @@ const storeHistoryKey = (historyKey: string) => {
 };
 
 const actions: ActionTree<ModalsState, RootState> = {
-  showCreateContactModal({ commit }, contact?: Contact) {
+  showCreateContactModal({ commit, dispatch }, contact?: Contact) {
     commit('setIsCreateContactModalOpen', true);
-    commit('setContactModalModel', contact);
+    dispatch('contacts/form/loadContact', contact, { root: true });
 
     storeHistoryKey(editContactHistoryKey);
   },
@@ -30,7 +30,10 @@ const actions: ActionTree<ModalsState, RootState> = {
 
   showViewContactModal({ commit }, contact?: Contact) {
     commit('setIsViewContactModalOpen', true);
-    commit('setContactModalModel', contact);
+
+    if (contact) {
+      commit('setContactModalModelId', contact.id);
+    }
 
     storeHistoryKey(viewContactsHistoryKey);
   },

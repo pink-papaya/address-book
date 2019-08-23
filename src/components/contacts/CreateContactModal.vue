@@ -6,7 +6,7 @@
   >
     <template #header>
       <div class="font-medium">
-        Create contact
+        {{ title }}
       </div>
     </template>
 
@@ -14,9 +14,11 @@
       <form
         id="create-contact-form"
         class="w-full"
-        @submit.prevent="createContact"
+        @submit.prevent="save"
       >
+        <!-- v-if is needed here or else v-select may not load the value correctly -->
         <app-select
+          v-if="isCreateContactModalOpen"
           v-model="$v.groupId.$model"
           :has-error="$v.groupId.$error"
           :options="groups"
@@ -63,14 +65,18 @@
 
     <template #footer>
       <button
-        class="app__button app__button--outline mr-5"
+        class="app__button app__button--sm app__button--outline mr-5"
         type="button"
         @click="close"
       >
         Cancel
       </button>
 
-      <button class="app__button" type="submit" form="create-contact-form">
+      <button
+        class="app__button app__button--sm"
+        type="submit"
+        form="create-contact-form"
+      >
         Save
       </button>
     </template>
@@ -108,20 +114,55 @@ export default Vue.extend({
 
   data() {
     return {
-      groupId: '',
-      name: '',
-      phone: '',
-      pictureUrl: '',
       groupImgPlaceholder,
     };
   },
 
   computed: {
     ...mapState('modals', ['isCreateContactModalOpen']),
+    ...mapGetters('contacts/form', ['isEdit']),
     ...mapGetters('groups', ['groups']),
     ...mapGetters('contacts', ['contactByName']),
 
-    nameError() {
+    groupId: {
+      get() {
+        return this.$store.state.contacts.form.groupId;
+      },
+      set(value) {
+        this.$store.commit('contacts/form/setGroupId', value);
+      },
+    },
+    name: {
+      get() {
+        return this.$store.state.contacts.form.name;
+      },
+      set(value) {
+        this.$store.commit('contacts/form/setName', value);
+      },
+    },
+    phone: {
+      get() {
+        return this.$store.state.contacts.form.phone;
+      },
+      set(value) {
+        this.$store.commit('contacts/form/setPhone', value);
+      },
+    },
+    pictureUrl: {
+      get() {
+        return this.$store.state.contacts.form.pictureUrl;
+      },
+      set(value) {
+        this.$store.commit('contacts/form/setPictureUrl', value);
+      },
+    },
+
+    title(): string {
+      // @ts-ignore
+      return this.isEdit ? 'Update contact' : 'Create contact';
+    },
+
+    nameError(): string {
       // @ts-ignore
       return this.$v.name.$uniqueName
         ? 'Name is required'
@@ -129,24 +170,20 @@ export default Vue.extend({
     },
   },
   methods: {
-    ...mapActions('modals', ['hideCreateContactModal']),
-    ...mapActions('contacts', ['addContact']),
+    ...mapActions('modals', ['hideCreateContactModal', 'showViewContactModal']),
+    ...mapActions('contacts', ['saveContact']),
+    ...mapActions('contacts/form', ['clearContact']),
 
     close() {
       // @ts-ignore
       this.hideCreateContactModal();
-
-      this.groupId = '';
-      this.name = '';
-      this.phone = '';
-      this.pictureUrl = '';
+      // @ts-ignore
+      this.clearContact();
       // @ts-ignore
       this.$v.$reset();
     },
 
-    async createContact() {
-      const { groupId, name, phone, pictureUrl } = this;
-
+    async save() {
       // @ts-ignore
       this.$v.$touch();
 
@@ -154,19 +191,12 @@ export default Vue.extend({
         return;
       }
 
-      this.close();
+      // @ts-ignore
+      this.saveContact().catch(error => {
+        console.log(error);
+      });
 
-      try {
-        // @ts-ignore
-        await this.addContact({
-          groupId,
-          name,
-          phone,
-          pictureUrl,
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      this.close();
     },
   },
 });

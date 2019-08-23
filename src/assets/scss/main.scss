@@ -50,6 +50,10 @@
       @apply bg-purple-900 text-white;
     }
   }
+
+  &--sm {
+    @apply py-1;
+  }
 }
 
 * {
