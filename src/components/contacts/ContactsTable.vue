@@ -47,6 +47,9 @@
         </tr>
       </transition-group>
     </table>
+    <div v-if="!contacts.length" class="p-2 font-medium text-gray-900">
+      You don't have any contacts yet
+    </div>
   </div>
 </template>
 
