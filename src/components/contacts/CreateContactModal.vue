@@ -165,7 +165,7 @@ export default Vue.extend({
 
     nameError(): string {
       // @ts-ignore
-      return this.$v.name.$uniqueName
+      return this.$v.name.uniqueName
         ? 'Name is required'
         : "There's already a contact with that name";
     },
