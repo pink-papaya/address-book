@@ -7,13 +7,19 @@ import addressBookService from '@/services/addressBook.service';
 const sessionKey = 'address-book-session';
 
 const actions: ActionTree<AuthState, RootState> = {
-  register(context, { username, password }) {
-    return addressBookService.create(username, password);
+  async register({ dispatch }, { username, password }) {
+    const addressBook = await addressBookService.create(username, password);
+
+    dispatch('saveSession', addressBook);
   },
 
-  async login({ commit, dispatch }, { username, password }) {
+  async login({ dispatch }, { username, password }) {
     const addressBook = await addressBookService.login(username, password);
 
+    dispatch('saveSession', addressBook);
+  },
+
+  saveSession({ commit, dispatch }, addressBook) {
     const session = {
       id: addressBook.id,
       username: addressBook.username,
