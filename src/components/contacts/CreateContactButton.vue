@@ -35,14 +35,14 @@ export default Vue.extend({
   },
 
   methods: {
-    ...mapActions('modals', ['showCreateContactModal']),
+    ...mapActions('modals', ['showContactModal']),
     ...mapActions('contacts/form', ['clearContact']),
 
     showModal() {
       // @ts-ignore
       this.clearContact();
       // @ts-ignore
-      this.showCreateContactModal();
+      this.showContactModal();
     },
   },
 });

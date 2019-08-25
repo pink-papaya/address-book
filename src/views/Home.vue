@@ -2,8 +2,8 @@
   <app-layout>
     <contacts-table />
     <view-contact-modal />
-    <create-contact-modal />
-    <create-group-modal />
+    <contact-modal />
+    <group-modal />
 
     <create-contact-button class="fixed md:hidden" />
   </app-layout>
@@ -13,8 +13,8 @@
 import Vue from 'vue';
 import { mapActions } from 'vuex';
 import ContactsTable from '@/components/contacts/ContactsTable.vue';
-import CreateContactModal from '@/components/contacts/CreateContactModal.vue';
-import CreateGroupModal from '@/components/groups/GroupModal.vue';
+import ContactModal from '@/components/contacts/ContactModal.vue';
+import GroupModal from '@/components/groups/GroupModal.vue';
 import CreateContactButton from '@/components/contacts/CreateContactButton.vue';
 import ViewContactModal from '@/components/contacts/ViewContactModal.vue';
 import AppLayout from '@/components/layouts/AppLayout.vue';
@@ -25,11 +25,11 @@ export default Vue.extend({
     AppLayout,
     ContactsTable,
     CreateContactButton,
-    CreateContactModal,
+    ContactModal,
     ViewContactModal,
-    CreateGroupModal,
+    GroupModal,
   },
-  methods: mapActions('modals', ['showCreateContactModal']),
+  methods: mapActions('modals', ['showContactModal']),
 });
 </script>
 

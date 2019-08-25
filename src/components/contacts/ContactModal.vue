@@ -94,7 +94,7 @@ const uniqueName = (value: string, vm: any) => {
 };
 
 export default Vue.extend({
-  name: 'CreateContactModal',
+  name: 'ContactModal',
 
   components: {
     AppModal,
@@ -168,13 +168,13 @@ export default Vue.extend({
     },
   },
   methods: {
-    ...mapActions('modals', ['hideCreateContactModal', 'showViewContactModal']),
+    ...mapActions('modals', ['hideContactModal', 'showViewContactModal']),
     ...mapActions('contacts', ['saveContact']),
     ...mapActions('contacts/form', ['clearContact']),
 
     close() {
       // @ts-ignore
-      this.hideCreateContactModal();
+      this.hideContactModal();
       // @ts-ignore
       this.clearContact();
       // @ts-ignore

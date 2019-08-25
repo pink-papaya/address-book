@@ -3,6 +3,7 @@ import { RootState } from '@/store/types';
 import { ModalsState } from '@/store/modals/types';
 import router from '@/router';
 import { Contact } from '@/store/contacts/types';
+import { Group } from '@/store/groups/types';
 
 const editContactHistoryKey = 'contact-modal-state';
 const viewContactsHistoryKey = 'view-contact-modal-state';
@@ -17,13 +18,13 @@ const storeHistoryKey = (historyKey: string) => {
 };
 
 const actions: ActionTree<ModalsState, RootState> = {
-  showCreateContactModal({ commit, dispatch }, contact?: Contact) {
+  showContactModal({ commit, dispatch }, contact?: Contact) {
     commit('setIsCreateContactModalOpen', true);
     dispatch('contacts/form/loadContact', contact, { root: true });
 
     storeHistoryKey(editContactHistoryKey);
   },
-  hideCreateContactModal({ commit }) {
+  hideContactModal({ commit }) {
     // mutation will be called twice
     // once here and another in the popstate handler
     // @todo confirm if this commit is necessary here
@@ -45,12 +46,13 @@ const actions: ActionTree<ModalsState, RootState> = {
     router.go(-1);
   },
 
-  showCreateGroupModal({ commit }) {
+  showGroupModal({ commit, dispatch }, group?: Group) {
     commit('setIsCreateGroupModalOpen', true);
+    dispatch('groups/form/loadGroup', group, { root: true });
 
     storeHistoryKey(editGroupHistoryKey);
   },
-  hideCreateGroupModal({ commit }) {
+  hideGroupModal({ commit }) {
     commit('setIsCreateGroupModalOpen', false);
     router.go(-1);
   },

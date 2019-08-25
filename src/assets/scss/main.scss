@@ -56,6 +56,7 @@
   }
 }
 
+/* purgecss start ignore */
 .dg-main-content {
   @apply rounded;
 }
@@ -66,6 +67,10 @@
   &:focus {
     @apply shadow-outline outline-none;
   }
+}
+
+.dg-content-cont--floating {
+  top: 50%;
 }
 
 .dg-btn--ok,
@@ -86,6 +91,8 @@
     }
   }
 }
+
+/* purgecss end ignore */
 
 * {
   -webkit-tap-highlight-color: transparent;

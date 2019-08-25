@@ -5,7 +5,15 @@ import db from '@/db';
 import groupService from '@/services/group.service';
 
 const actions: ActionTree<GroupsState, RootState> = {
+  async saveGroup({ dispatch, getters }, group: Group) {
+    return group.id
+      ? dispatch('updateGroup', group)
+      : dispatch('addGroup', group);
+  },
+
   async addGroup({ commit, dispatch, rootGetters }, group: Group) {
+    group.id = `group-${Date.now()}`;
+
     await (await db).add('groups', group);
 
     commit('addGroup', group);
@@ -20,6 +28,50 @@ const actions: ActionTree<GroupsState, RootState> = {
   async rollBackCreate({ commit }, group: Group) {
     await (await db).delete('groups', group.id);
     commit('deleteGroup', group);
+  },
+
+  async updateGroup({ commit, dispatch, getters, rootGetters }, group) {
+    const originalGroup = getters.groupById(group.id);
+
+    await (await db).put('groups', group);
+    commit('updateGroup', group);
+
+    try {
+      await groupService.update(rootGetters['auth/addressBookId'], group);
+    } catch (e) {
+      dispatch('rollBackUpdate', originalGroup);
+      throw e;
+    }
+  },
+
+  async rollBackUpdate({ commit }, originalGroup: Group) {
+    await (await db).put('groups', originalGroup);
+
+    commit('updateGroup', {
+      id: originalGroup.id,
+      contact: originalGroup,
+    });
+  },
+
+  async deleteGroup({ commit, dispatch, getters, rootGetters }, group: Group) {
+    console.log({...group});
+
+    await (await db).delete('groups', group.id);
+    commit('deleteGroup', group);
+
+    try {
+      await groupService.delete(rootGetters['auth/addressBookId'], group);
+    } catch (e) {
+      /* @todo: show error notification */
+      dispatch('rollBackDelete', group);
+      throw e;
+    }
+  },
+
+  async rollBackDelete({ commit }, originalGroup: Group) {
+    await (await db).put('groups', originalGroup);
+
+    commit('addGroup', originalGroup);
   },
 
   selectGroup({ commit }, groupId?: string) {

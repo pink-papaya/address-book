@@ -43,6 +43,10 @@ const getters: GetterTree<ContactsState, RootState> = {
 
     return filters.reduce((result, filter) => result.filter(filter), contacts);
   },
+  contactsByGroupId: state => (groupId: string) =>
+    Object.values(state.contacts).filter(
+      contact => contact.groupId === groupId,
+    ),
   contactByName: (state, getters) => (name: string) =>
     getters.contacts.find(
       (contact: DynamicContact) =>

@@ -101,7 +101,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    ...mapActions('modals', ['hideViewContactModal', 'showCreateContactModal']),
+    ...mapActions('modals', ['hideViewContactModal', 'showContactModal']),
     ...mapActions('contacts', ['addContact', 'deleteContact']),
 
     close() {
@@ -110,9 +110,8 @@ export default Vue.extend({
     },
 
     editContact() {
-      // this.close();
       // @ts-ignore
-      this.showCreateContactModal(this.contact);
+      this.showContactModal(this.contact);
     },
 
     async showDeleteConfirmation() {

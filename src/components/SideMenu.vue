@@ -25,7 +25,7 @@
         <a
           v-if="networkOnLine"
           class="side-menu__group-button mt-5"
-          @click="showCreateGroupModal"
+          @click="showGroupModal"
         >
           <font-awesome-icon icon="plus" class="mx-2 text-gray-600" />
           <span class="group-button__label">Create group</span>
@@ -54,12 +54,12 @@
               <font-awesome-icon
                 icon="pen"
                 class="group-button__action mr-3 fa-sm"
-                @click.stop="editGroup(group.id)"
+                @click.stop="editGroup(group)"
               />
               <font-awesome-icon
                 icon="trash"
                 class="group-button__action fa-sm"
-                @click.stop="deleteGroup(group.id)"
+                @click.stop="showDeleteConfirmation(group)"
               />
             </span>
           </a>
@@ -80,6 +80,7 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import AppImgLoader from '@/components/AppImgLoader.vue';
 import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
 import CreateContactButton from '@/components/contacts/CreateContactButton.vue';
+import { Group } from '@/store/groups/types';
 
 export default Vue.extend({
   name: 'SideMenu',
@@ -96,14 +97,15 @@ export default Vue.extend({
     ...mapState('app', ['networkOnLine', 'isSideMenuOpen']),
     ...mapState('groups', ['selectedGroupId']),
     ...mapGetters('groups', ['groups']),
+    ...mapGetters('contacts', ['contactsByGroupId']),
     ...mapGetters('auth', ['username']),
   },
 
   methods: {
     ...mapActions('app', ['toggleSideMenu']),
     ...mapActions('auth', ['logout']),
-    ...mapActions('modals', ['showCreateContactModal', 'showCreateGroupModal']),
-    ...mapActions('groups', ['selectGroup']),
+    ...mapActions('modals', ['showGroupModal']),
+    ...mapActions('groups', ['selectGroup', 'deleteGroup']),
 
     setGroup(groupId?: string) {
       this.selectGroup(groupId);
@@ -113,8 +115,46 @@ export default Vue.extend({
       }
     },
 
-    editGroup() {},
-    deleteGroup() {},
+    editGroup(group: Group) {
+      // @ts-ignore
+      this.showGroupModal(group);
+    },
+
+    async showDeleteConfirmation(group: Group) {
+      if (this.contactsByGroupId(group.id).length) {
+        this.$dialog.alert({
+          title: 'Action not allowed',
+          body: 'You must remove all group contacts before removing the group.',
+        });
+
+        return;
+      }
+
+      try {
+        await this.$dialog.confirm(
+          'Are you sure you want to delete this group?',
+          {
+            customClass: 'delete-modal',
+            okText: 'Delete',
+            cancelText: 'Cancel',
+          },
+        );
+
+        try {
+          // @ts-ignore
+          await this.deleteGroup(group);
+        } catch (e) {
+          console.log(e);
+          this.$dialog.alert({
+            title: 'Network error',
+            body:
+              'It was not possible to delete the contact. Please try again later.',
+          });
+        }
+      } catch (e) {
+        // ignore cancel
+      }
+    },
   },
 });
 </script>

@@ -6,13 +6,13 @@ import db from '@/db';
 import contactService from '@/services/contact.service';
 
 const actions: ActionTree<ContactsState, RootState> = {
-  async saveContact({ dispatch, getters }, contact) {
+  async saveContact({ dispatch, getters }, contact: Contact) {
     return contact.id
       ? dispatch('updateContact', contact)
       : dispatch('addContact', contact);
   },
 
-  async addContact({ commit, dispatch, rootGetters }, contact) {
+  async addContact({ commit, dispatch, rootGetters }, contact: Contact) {
     try {
       // idb can't handle undefined as the keypath value
       delete contact.id;
@@ -40,11 +40,14 @@ const actions: ActionTree<ContactsState, RootState> = {
     commit('deleteContact', contact);
   },
 
-  async updateContact({ commit, dispatch, getters, rootGetters }, contact) {
+  async updateContact(
+    { commit, dispatch, getters, rootGetters },
+    contact: Contact,
+  ) {
     const originalContact = getters.contactById(contact.id);
 
     await (await db).put('contacts', contact);
-    commit('updateContact', { id: contact.id, contact });
+    commit('updateContact', contact);
 
     try {
       await contactService.update(

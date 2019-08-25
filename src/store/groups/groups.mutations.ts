@@ -18,6 +18,9 @@ const mutations: MutationTree<GroupsState> = {
   deleteGroup(state, group: Group) {
     Vue.delete(state.groups, group.id);
   },
+  updateGroup(state, group: Group) {
+    state.groups[group.id] = group;
+  },
   setLoading(state, value: boolean) {
     state.isLoading = value;
   },

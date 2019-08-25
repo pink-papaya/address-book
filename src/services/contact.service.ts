@@ -12,7 +12,7 @@ class ContactService {
   public async update(
     addressBookId: string,
     originalName: ApiContact['name'],
-    contact: ApiContact,
+    contact: Contact,
   ): Promise<number> {
     return api.put(`/${addressBookId}/contacts/${originalName}`, contact);
   }

@@ -2,7 +2,7 @@
   <app-modal v-show="isCreateGroupModalOpen" mobile-full-screen @close="close">
     <template #header>
       <div class="font-medium">
-        Create contact
+        {{ title }}
       </div>
     </template>
 
@@ -74,29 +74,51 @@ export default Vue.extend({
     pictureUrl: { url },
   },
 
-  data() {
-    return {
-      name: '',
-      description: '',
-      pictureUrl: '',
-    };
-  },
-
   computed: {
     ...mapState('modals', ['isCreateGroupModalOpen']),
     ...mapGetters('groups', ['groups']),
+    ...mapGetters('groups/form', ['isEdit', 'group']),
+
+    title(): string {
+      // @ts-ignore
+      return this.isEdit ? 'Update group' : 'Create group';
+    },
+
+    name: {
+      get() {
+        return this.$store.state.groups.form.name;
+      },
+      set(value) {
+        this.$store.commit('groups/form/setName', value);
+      },
+    },
+    description: {
+      get() {
+        return this.$store.state.groups.form.description;
+      },
+      set(value) {
+        this.$store.commit('groups/form/setDescription', value);
+      },
+    },
+    pictureUrl: {
+      get() {
+        return this.$store.state.groups.form.pictureUrl;
+      },
+      set(value) {
+        this.$store.commit('groups/form/setPictureUrl', value);
+      },
+    },
   },
   methods: {
-    ...mapActions('modals', ['hideCreateGroupModal']),
-    ...mapActions('groups', ['addGroup']),
+    ...mapActions('modals', ['hideGroupModal']),
+    ...mapActions('groups', ['saveGroup']),
+    ...mapActions('groups/form', ['clearGroup']),
 
     close() {
-      this.hideCreateGroupModal();
-
-      this.name = '';
-      this.description = '';
-      this.pictureUrl = '';
-
+      // @ts-ignore
+      this.hideGroupModal();
+      // @ts-ignore
+      this.clearGroup();
       // @ts-ignore
       this.$v.$reset();
     },
@@ -109,20 +131,21 @@ export default Vue.extend({
         return;
       }
 
-      const { name, description, pictureUrl } = this;
-
-      try {
-        await this.addGroup({
-          id: `group-${Date.now()}`,
-          name,
-          description,
-          pictureUrl,
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      // @ts-ignore
+      const group = { ...this.group };
 
       this.close();
+
+      try {
+        // @ts-ignore
+        await this.saveGroup(group);
+      } catch (e) {
+        this.$dialog.alert({
+          title: 'Network error',
+          body:
+            'It was not possible to save the group. Please try again later.',
+        });
+      }
     },
   },
 });
