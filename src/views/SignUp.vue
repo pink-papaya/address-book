@@ -10,7 +10,15 @@
       <app-input
         v-model="$v.password.$model"
         :has-error="$v.password.$error"
+        :error="passwordError"
         label="Password"
+        type="password"
+        class="mb-6"
+      />
+      <app-input
+        v-model="$v.repeatPassword.$model"
+        :has-error="$v.repeatPassword.$error"
+        label="Repeat password"
         type="password"
         class="mb-6"
       />
@@ -37,7 +45,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { required } from 'vuelidate/lib/validators';
+import { minLength, required, sameAs } from 'vuelidate/lib/validators';
 import LoginLayout from '@/components/layouts/LoginLayout.vue';
 import AppInput from '@/components/AppInput.vue';
 
@@ -50,6 +58,7 @@ export default Vue.extend({
     return {
       username: '',
       password: '',
+      repeatPassword: '',
       isLoading: false,
       hasError: false,
     };
@@ -57,7 +66,16 @@ export default Vue.extend({
 
   validations: {
     username: { required },
-    password: { required },
+    password: { required, minLength: minLength(6) },
+    repeatPassword: { sameAsPassword: sameAs('password') },
+  },
+
+  computed: {
+    passwordError() {
+      return !this.$v.password!.minLength
+        ? 'Password must have at least 6 characters'
+        : '';
+    },
   },
 
   methods: {
