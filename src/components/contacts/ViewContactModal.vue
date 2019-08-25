@@ -38,7 +38,7 @@
       </div>
     </template>
 
-    <template #footer>
+    <template v-if="networkOnLine" #footer>
       <button
         class="app__button app__button--sm app__button--outline mr-5"
         type="button"
@@ -83,6 +83,7 @@ export default Vue.extend({
   },
 
   computed: {
+    ...mapState('app', ['networkOnLine']),
     ...mapState('modals', {
       isViewContactModalOpen: 'isViewContactModalOpen',
       contactId: 'contactModalModelId',

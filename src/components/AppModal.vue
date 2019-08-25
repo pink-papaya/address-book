@@ -25,7 +25,7 @@
         <section id="modal-description" class="app-modal__body">
           <slot name="body" />
         </section>
-        <footer class="app-modal__footer">
+        <footer v-if="$slots.footer" class="app-modal__footer">
           <slot name="footer" />
         </footer>
       </div>

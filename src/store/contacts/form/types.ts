@@ -1,4 +1,3 @@
 import { Contact } from '@/store/contacts/types';
 
-export interface ContactsFormState extends Contact {
-}
+export interface ContactsFormState extends Contact {}
