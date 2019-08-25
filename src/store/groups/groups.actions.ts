@@ -54,8 +54,6 @@ const actions: ActionTree<GroupsState, RootState> = {
   },
 
   async deleteGroup({ commit, dispatch, getters, rootGetters }, group: Group) {
-    console.log({...group});
-
     await (await db).delete('groups', group.id);
     commit('deleteGroup', group);
 

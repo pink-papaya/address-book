@@ -1,8 +1,9 @@
 import { Contact } from '@/store/contacts/types';
 
 export interface ModalsState {
-  isCreateContactModalOpen: boolean;
+  isContactModalOpen: boolean;
   isViewContactModalOpen: boolean;
-  isCreateGroupModalOpen: boolean;
+  isGroupModalOpen: boolean;
+  isChangePasswordModalOpen: boolean;
   contactModalModelId: Contact['id'];
 }

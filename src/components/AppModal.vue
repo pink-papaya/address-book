@@ -57,6 +57,7 @@ export default Vue.extend({
   methods: {
     handleEscKey(event: KeyboardEvent) {
       if (event.key === 'Escape') {
+        event.stopImmediatePropagation();
         this.close();
       }
     },

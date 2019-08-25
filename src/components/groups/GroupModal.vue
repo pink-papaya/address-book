@@ -1,5 +1,5 @@
 <template>
-  <app-modal v-show="isCreateGroupModalOpen" mobile-full-screen @close="close">
+  <app-modal v-show="isGroupModalOpen" mobile-full-screen @close="close">
     <template #header>
       <div class="font-medium">
         {{ title }}
@@ -35,6 +35,7 @@
 
     <template #footer>
       <button
+        :disabled="isSaving"
         class="app__button app__button--sm app__button--outline mr-5"
         type="button"
         @click="close"
@@ -43,6 +44,7 @@
       </button>
 
       <button
+        :disabled="isSaving"
         class="app__button app__button--sm"
         type="submit"
         form="create-group-form"
@@ -68,6 +70,12 @@ export default Vue.extend({
     AppInput,
   },
 
+  data() {
+    return {
+      isSaving: false,
+    };
+  },
+
   validations: {
     name: { required },
     description: {},
@@ -75,7 +83,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState('modals', ['isCreateGroupModalOpen']),
+    ...mapState('modals', ['isGroupModalOpen']),
     ...mapGetters('groups', ['groups']),
     ...mapGetters('groups/form', ['isEdit', 'group']),
 
@@ -124,6 +132,8 @@ export default Vue.extend({
     },
 
     async createGroup() {
+      this.isSaving = true;
+
       // @ts-ignore
       this.$v.$touch();
 
@@ -146,6 +156,8 @@ export default Vue.extend({
             'It was not possible to save the group. Please try again later.',
         });
       }
+
+      this.isSaving = false;
     },
   },
 });

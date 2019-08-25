@@ -8,6 +8,7 @@ import { Group } from '@/store/groups/types';
 const editContactHistoryKey = 'contact-modal-state';
 const viewContactsHistoryKey = 'view-contact-modal-state';
 const editGroupHistoryKey = 'group-modal-state';
+const changePasswordHistoryKey = 'change-password-modal-state';
 
 const storeHistoryKey = (historyKey: string) => {
   window.history.replaceState(
@@ -19,7 +20,7 @@ const storeHistoryKey = (historyKey: string) => {
 
 const actions: ActionTree<ModalsState, RootState> = {
   showContactModal({ commit, dispatch }, contact?: Contact) {
-    commit('setIsCreateContactModalOpen', true);
+    commit('setIsContactModalOpen', true);
     dispatch('contacts/form/loadContact', contact, { root: true });
 
     storeHistoryKey(editContactHistoryKey);
@@ -28,7 +29,7 @@ const actions: ActionTree<ModalsState, RootState> = {
     // mutation will be called twice
     // once here and another in the popstate handler
     // @todo confirm if this commit is necessary here
-    commit('setIsCreateContactModalOpen', false);
+    commit('setIsContactModalOpen', false);
     router.go(-1);
   },
 
@@ -47,13 +48,23 @@ const actions: ActionTree<ModalsState, RootState> = {
   },
 
   showGroupModal({ commit, dispatch }, group?: Group) {
-    commit('setIsCreateGroupModalOpen', true);
+    commit('setIsGroupModalOpen', true);
     dispatch('groups/form/loadGroup', group, { root: true });
 
     storeHistoryKey(editGroupHistoryKey);
   },
   hideGroupModal({ commit }) {
-    commit('setIsCreateGroupModalOpen', false);
+    commit('setIsGroupModalOpen', false);
+    router.go(-1);
+  },
+
+  showChangePasswordModal({ commit }) {
+    commit('setIsChangePasswordModal', true);
+
+    storeHistoryKey(changePasswordHistoryKey);
+  },
+  hideChangePasswordModal({ commit }) {
+    commit('setIsChangePasswordModal', false);
     router.go(-1);
   },
 
@@ -62,9 +73,10 @@ const actions: ActionTree<ModalsState, RootState> = {
     handler({ commit }) {
       window.addEventListener('popstate', event => {
         const mutationMap = {
-          [editContactHistoryKey]: 'setIsCreateContactModalOpen',
+          [editContactHistoryKey]: 'setIsContactModalOpen',
           [viewContactsHistoryKey]: 'setIsViewContactModalOpen',
-          [editGroupHistoryKey]: 'setIsCreateGroupModalOpen',
+          [editGroupHistoryKey]: 'setIsGroupModalOpen',
+          [changePasswordHistoryKey]: 'setIsChangePasswordModal',
         };
 
         const key: keyof typeof mutationMap = event.state.historyKey;

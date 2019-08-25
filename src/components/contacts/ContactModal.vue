@@ -1,5 +1,5 @@
 <template>
-  <app-modal v-if="isCreateContactModalOpen" mobile-full-screen @close="close">
+  <app-modal v-if="isContactModalOpen" mobile-full-screen @close="close">
     <template #header>
       <div class="font-medium">
         {{ title }}
@@ -55,6 +55,7 @@
 
     <template #footer>
       <button
+        :disabled="isSaving"
         class="app__button app__button--sm app__button--outline mr-5"
         type="button"
         @click="close"
@@ -63,6 +64,7 @@
       </button>
 
       <button
+        :disabled="isSaving"
         class="app__button app__button--sm"
         type="submit"
         form="create-contact-form"
@@ -113,11 +115,12 @@ export default Vue.extend({
   data() {
     return {
       groupImgPlaceholder,
+      isSaving: false,
     };
   },
 
   computed: {
-    ...mapState('modals', ['isCreateContactModalOpen']),
+    ...mapState('modals', ['isContactModalOpen']),
     ...mapGetters('contacts/form', ['isEdit', 'contact']),
     ...mapGetters('groups', ['groups']),
     ...mapGetters('contacts', ['contactByName']),
@@ -182,6 +185,8 @@ export default Vue.extend({
     },
 
     async save() {
+      this.isSaving = true;
+
       // @ts-ignore
       this.$v.$touch();
 
@@ -204,6 +209,8 @@ export default Vue.extend({
             'It was not possible to save the contact. Please try again later.',
         });
       }
+
+      this.isSaving = false;
     },
   },
 });

@@ -36,11 +36,8 @@ export default Vue.extend({
 
   methods: {
     ...mapActions('modals', ['showContactModal']),
-    ...mapActions('contacts/form', ['clearContact']),
 
     showModal() {
-      // @ts-ignore
-      this.clearContact();
       // @ts-ignore
       this.showContactModal();
     },

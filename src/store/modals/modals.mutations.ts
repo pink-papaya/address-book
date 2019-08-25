@@ -3,8 +3,8 @@ import { ModalsState } from '@/store/modals/types';
 import { Contact } from '@/store/contacts/types';
 
 const mutations: MutationTree<ModalsState> = {
-  setIsCreateContactModalOpen(state, value: boolean) {
-    state.isCreateContactModalOpen = value;
+  setIsContactModalOpen(state, value: boolean) {
+    state.isContactModalOpen = value;
   },
 
   setIsViewContactModalOpen(state, value: boolean) {
@@ -14,8 +14,12 @@ const mutations: MutationTree<ModalsState> = {
     state.contactModalModelId = value;
   },
 
-  setIsCreateGroupModalOpen(state, value: boolean) {
-    state.isCreateGroupModalOpen = value;
+  setIsGroupModalOpen(state, value: boolean) {
+    state.isGroupModalOpen = value;
+  },
+
+  setIsChangePasswordModal(state, value: boolean) {
+    state.isChangePasswordModalOpen = value;
   },
 };
 

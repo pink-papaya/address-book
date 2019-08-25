@@ -34,12 +34,23 @@ class AddressBookService {
     return addressBook;
   }
 
-  public updatePassword(
+  public async updatePassword(
     id: string,
     username: string,
-    password: string,
+    oldPassword: string,
+    newPassword: string,
   ): Promise<AddressBook> {
-    return api.put(id, { id, username, password });
+    const addressBook = await this.getById(id);
+
+    if (addressBook.password !== oldPassword) {
+      throw new Error('Wrong old password');
+    }
+
+    return api.put(id, { id, username, password: newPassword });
+  }
+
+  public delete(id: string) {
+    return api.delete(id);
   }
 }
 

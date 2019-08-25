@@ -4,8 +4,9 @@
     <view-contact-modal />
     <contact-modal />
     <group-modal />
+    <change-password-modal />
 
-    <create-contact-button class="fixed md:hidden" />
+    <create-contact-button class="fixed lg:hidden" />
   </app-layout>
 </template>
 
@@ -18,6 +19,7 @@ import GroupModal from '@/components/groups/GroupModal.vue';
 import CreateContactButton from '@/components/contacts/CreateContactButton.vue';
 import ViewContactModal from '@/components/contacts/ViewContactModal.vue';
 import AppLayout from '@/components/layouts/AppLayout.vue';
+import ChangePasswordModal from '@/components/ChangePasswordModal.vue';
 
 export default Vue.extend({
   name: 'Home',
@@ -28,6 +30,7 @@ export default Vue.extend({
     ContactModal,
     ViewContactModal,
     GroupModal,
+    ChangePasswordModal,
   },
   methods: mapActions('modals', ['showContactModal']),
 });

@@ -47,6 +47,20 @@ const actions: ActionTree<AuthState, RootState> = {
     router.push('/login');
   },
 
+  async changePassword({ getters }, { oldPassword, newPassword }) {
+    return await addressBookService.updatePassword(
+      getters.addressBookId,
+      getters.username,
+      oldPassword,
+      newPassword,
+    );
+  },
+
+  async deleteAddressBook({ dispatch, getters }) {
+    await addressBookService.delete(getters.addressBookId);
+    dispatch('logout');
+  },
+
   init: {
     root: true,
     handler({ commit, dispatch }) {

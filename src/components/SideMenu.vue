@@ -1,21 +1,14 @@
 <template>
   <div>
     <nav :class="{ 'side-menu--visible': isSideMenuOpen }" class="side-menu">
-      <div
-        class="md:hidden flex flex-col justify-center items-center border-b-2 pb-5 mb-5"
-      >
-        <span class="font-medium text-gray-900">{{ username }}</span>
-        <button class="mx-5 font-bold text-purple-900" @click="logout">
-          Logout
-        </button>
-      </div>
+      <app-bar-dropdown class="lg:hidden border-b-2 pb-5 mb-5" />
 
       <div class="flex flex-1 flex-col overflow-auto">
-        <create-contact-button class="mx-2 hidden md:block" />
+        <create-contact-button class="mx-2 hidden lg:block" />
 
         <a
           :class="{ 'side-menu__group-button--active': !selectedGroupId }"
-          class="side-menu__group-button md:mt-5"
+          class="side-menu__group-button lg:mt-5"
           @click="setGroup(undefined)"
         >
           <font-awesome-icon icon="users" class="mx-2 text-gray-600" />
@@ -50,7 +43,7 @@
               class="h-8 w-8 mr-2 object-cover rounded-full"
             />
             <span class="group-button__label">{{ group.name }}</span>
-            <span class="group-button__actions">
+            <span v-if="networkOnLine" class="group-button__actions">
               <font-awesome-icon
                 icon="pen"
                 class="group-button__action mr-3 fa-sm"
@@ -68,7 +61,7 @@
     </nav>
     <div
       v-show="isSideMenuOpen"
-      class="fixed md:hidden inset-0 z-20"
+      class="fixed lg:hidden inset-0 z-20"
       @click="toggleSideMenu"
     />
   </div>
@@ -81,11 +74,12 @@ import AppImgLoader from '@/components/AppImgLoader.vue';
 import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
 import CreateContactButton from '@/components/contacts/CreateContactButton.vue';
 import { Group } from '@/store/groups/types';
+import AppBarDropdown from '@/components/AppBarDropdown.vue';
 
 export default Vue.extend({
   name: 'SideMenu',
 
-  components: { AppImgLoader, CreateContactButton },
+  components: { AppImgLoader, CreateContactButton, AppBarDropdown },
 
   data() {
     return {
@@ -98,12 +92,10 @@ export default Vue.extend({
     ...mapState('groups', ['selectedGroupId']),
     ...mapGetters('groups', ['groups']),
     ...mapGetters('contacts', ['contactsByGroupId']),
-    ...mapGetters('auth', ['username']),
   },
 
   methods: {
     ...mapActions('app', ['toggleSideMenu']),
-    ...mapActions('auth', ['logout']),
     ...mapActions('modals', ['showGroupModal']),
     ...mapActions('groups', ['selectGroup', 'deleteGroup']),
 
@@ -144,7 +136,6 @@ export default Vue.extend({
           // @ts-ignore
           await this.deleteGroup(group);
         } catch (e) {
-          console.log(e);
           this.$dialog.alert({
             title: 'Network error',
             body:
@@ -172,7 +163,7 @@ export default Vue.extend({
     transform: translateX(0);
   }
 
-  @screen md {
+  @screen lg {
     @apply shadow-none z-0;
     margin-top: 85px;
     height: calc(100vh - 85px);

@@ -6,7 +6,7 @@
       <font-awesome-icon icon="bars" />
     </div>
 
-    <div class="font-bold text-3xl text-left md:max-w-xs md:w-full">
+    <div class="font-bold text-3xl text-left lg:max-w-xs lg:w-full">
       <font-awesome-icon icon="address-book" />
       <h1 class="hidden md:inline">&nbsp;Address Book</h1>
     </div>
@@ -29,25 +29,30 @@
       </div>
     </div>
 
-    <div class="hidden md:block">
-      <span class="font-medium text-gray-900">{{ username }}</span>
-      <button class="mx-5 font-bold text-purple-900" @click="logout">
-        Logout
-      </button>
-    </div>
+    <app-bar-dropdown class="hidden lg:block" />
   </header>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import debounce from 'lodash/debounce';
-import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
+import AppBarDropdown from '@/components/AppBarDropdown.vue';
 
 export default Vue.extend({
   name: 'AppBar',
 
+  components: {
+    AppBarDropdown,
+  },
+
+  data() {
+    return {
+      isUserMenuOpen: false,
+    };
+  },
+
   computed: {
-    ...mapGetters('auth', ['username']),
     searchQuery: {
       get() {
         return this.$store.state.contacts.searchQuery;
@@ -64,7 +69,6 @@ export default Vue.extend({
 
   methods: {
     ...mapActions('app', ['toggleSideMenu']),
-    ...mapActions('auth', ['logout']),
     ...mapMutations('contacts', ['setSearchQuery']),
   },
 });
@@ -72,6 +76,10 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .app-bar__search {
+  transition: all 0.25s;
+}
+
+.app-bar__dropdown-menu {
   transition: all 0.25s;
 }
 </style>
