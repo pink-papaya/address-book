@@ -8,13 +8,13 @@ describe('contacts module mutation', () => {
         contacts: {},
       } as ContactsState;
 
-      const contact = { name: 'name' };
+      const contact = { id: 1, name: 'name' };
 
       mutations.addContact(state, contact);
 
       expect(state).toEqual({
         contacts: {
-          [contact.name]: contact,
+          [contact.id]: contact,
         },
       });
     });
@@ -22,10 +22,10 @@ describe('contacts module mutation', () => {
 
   describe('deleteContact', () => {
     it('should remove the contact from the map', () => {
-      const contact = { name: 'name' };
+      const contact = { id: 1, name: 'name' };
       const state = {
         contacts: {
-          [contact.name]: contact,
+          [contact.id]: contact,
         },
       } as ContactsState;
 
@@ -39,16 +39,16 @@ describe('contacts module mutation', () => {
 
   describe('storeContacts', () => {
     it('should replace the current contacts with the passed value', () => {
-      const contact = { name: 'name' };
+      const contact = { id: 1, name: 'name' };
       const state = {
-        contacts: {},
+        contacts: { 2: { id: 2, name: 'name2' } } as any,
       } as ContactsState;
 
       mutations.storeContacts(state, [contact]);
 
       expect(state).toEqual({
         contacts: {
-          [contact.name]: contact,
+          [contact.id]: contact,
         },
       });
     });

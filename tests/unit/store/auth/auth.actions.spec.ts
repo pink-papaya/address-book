@@ -21,16 +21,24 @@ afterEach(() => {
 
 describe('auth module action', () => {
   describe('register', () => {
-    it('should call the create method of the addressBook service', () => {
+    it('should call the create method of the addressBook service', async () => {
       const action: any = actions.register;
       const username = 'user';
       const password = 'pass';
 
-      action({}, { username, password });
+      const addressBook = { id: 'id', username: 'username' };
+
+      (<any>addressBookService).create.mockReturnValueOnce(
+        Promise.resolve(addressBook),
+      );
+
+      await action({ dispatch }, { username, password });
       expect(addressBookService.create).toHaveBeenCalledWith(
         username,
         password,
       );
+
+      expect(dispatch).toHaveBeenCalledWith('saveSession', addressBook);
     });
   });
 
@@ -39,50 +47,54 @@ describe('auth module action', () => {
     const username = 'user';
     const password = 'pass';
 
-    it('should attempt to login with the provided credentials', () => {
+    it('should attempt to login with the provided credentials', async () => {
+      await (<any>addressBookService).login.mockReturnValueOnce(
+        Promise.resolve({}),
+      );
+
       action({ commit, dispatch }, { username, password });
+
       expect(addressBookService.login).toHaveBeenCalledWith(username, password);
     });
 
     describe('when login is successful', () => {
-      const id = 'id';
-      it('should store the addressBook id and username ', async () => {
+      it('should store the returned data', async () => {
+        const addressBook = { id: 'id', username: 'username' };
+
         (<any>addressBookService).login.mockReturnValueOnce(
-          Promise.resolve({
-            id,
-            username,
-          }),
+          Promise.resolve(addressBook),
         );
         await action({ commit, dispatch }, { username, password });
 
-        expect(commit).toHaveBeenCalledWith('setSession', { id, username });
-        expect(localStorage.setItem).toHaveBeenCalledWith(
-          'address-book-session',
-          JSON.stringify({ id, username }),
-        );
+        expect(dispatch).toHaveBeenCalledWith('saveSession', addressBook);
       });
+    });
+  });
 
-      it('should dispatch actions to store contacts and groups ', async () => {
-        const contacts = [{ name: 'contact' }];
-        const groups = [{ name: 'group' }];
-        (<any>addressBookService).login.mockReturnValueOnce(
-          Promise.resolve({
-            id,
-            username,
-            groups,
-            contacts,
-          }),
-        );
-        await action({ commit, dispatch }, { username, password });
+  describe('saveSession', () => {
+    it('should store the addressBook id and username ', async () => {
+      const id = 'id';
+      const username = 'username';
+      const contacts = [{ name: 'contact' }];
+      const groups = [{ name: 'group' }];
+      const addressBook = { id, username, groups, contacts };
+      const action: any = actions.saveSession;
 
-        expect(dispatch).toHaveBeenCalledWith(
-          'contacts/storeContacts',
-          contacts,
-          { root: true },
-        );
-        expect(dispatch).toHaveBeenCalledWith('groups/storeGroups', groups, {
-          root: true,
-        });
+      await action({ commit, dispatch }, addressBook);
+
+      expect(commit).toHaveBeenCalledWith('setSession', { id, username });
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        'address-book-session',
+        JSON.stringify({ id, username }),
+      );
+
+      expect(dispatch).toHaveBeenCalledWith(
+        'contacts/storeContacts',
+        contacts,
+        { root: true },
+      );
+      expect(dispatch).toHaveBeenCalledWith('groups/storeGroups', groups, {
+        root: true,
       });
     });
   });
@@ -108,15 +120,16 @@ describe('auth module action', () => {
       expect(action.root).toBe(true);
     });
 
-    it('should load the session data from local storage when set', () => {
+    it('should load the session data from local storage when set and refresh the local data', () => {
       const action: any = actions.init;
       const session = {};
 
       (<any>localStorage).getItem.mockReturnValueOnce(JSON.stringify(session));
 
-      action.handler({ commit });
+      action.handler({ commit, dispatch });
 
       expect(commit).toHaveBeenCalledWith('setSession', session);
+      expect(dispatch).toHaveBeenCalledWith('refreshData');
     });
 
     it('should do nothing when there is no data', () => {
