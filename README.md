@@ -1,4 +1,24 @@
-# take-home
+# Address Book
+
+A simple app to manage an address book, written in Vue and typescript
+
+Features:
+- Account management
+  * Sign up
+  * Log in
+  * Change password
+  * Delete account  
+- Contact management
+  * Create
+  * Update
+  * Delete
+- Group management
+  * Create
+  * Update
+  * Delete
+- PWA support
+- Available offline in read only mode
+
 
 ## Project setup
 ```
@@ -15,35 +35,4 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Run your end-to-end tests
-```
-yarn run test:e2e
-```
-
-### Run your unit tests
-```
-yarn run test:unit
-```
-
-### Run prettier check format
-```
-yarn run prettier:check
-```
-
-### Format all files with prettier
-```
-yarn run prettier:format-all
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Check package.json for the full list of available commands.
