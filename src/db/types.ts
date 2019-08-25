@@ -8,7 +8,7 @@ export interface AppDB extends DBSchema {
     value: Group;
   };
   contacts: {
-    key: string;
+    key: number;
     value: Contact;
   };
 }

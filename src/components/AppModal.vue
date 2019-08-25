@@ -5,10 +5,10 @@
         :class="{ 'app-modal--mobile-fullscreen': mobileFullScreen }"
         class="app-modal"
         role="dialog"
-        aria-labelledby="modalTitle"
-        aria-describedby="modalDescription"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
       >
-        <header class="app-modal__header">
+        <header id="modal-title" class="app-modal__header">
           <div class="flex-1">
             <slot name="header" />
           </div>
@@ -22,7 +22,7 @@
             <font-awesome-icon icon="times" size="lg" />
           </button>
         </header>
-        <section class="app-modal__body">
+        <section id="modal-description" class="app-modal__body">
           <slot name="body" />
         </section>
         <footer class="app-modal__footer">

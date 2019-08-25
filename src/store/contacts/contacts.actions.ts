@@ -35,7 +35,7 @@ const actions: ActionTree<ContactsState, RootState> = {
   },
 
   async rollBackCreate({ commit }, contact: Contact) {
-    await (await db).delete('contacts', contact.id);
+    await (await db).delete('contacts', contact.id!);
     commit('deleteContact', contact);
   },
 

@@ -1,9 +1,5 @@
 <template>
-  <app-modal
-    v-if="isCreateContactModalOpen"
-    mobile-full-screen
-    @close="close"
-  >
+  <app-modal v-if="isCreateContactModalOpen" mobile-full-screen @close="close">
     <template #header>
       <div class="font-medium">
         {{ title }}

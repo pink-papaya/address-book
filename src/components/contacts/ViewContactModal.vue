@@ -120,6 +120,7 @@ export default Vue.extend({
         await this.$dialog.confirm(
           'Are you sure you want to delete this contact?',
           {
+            customClass: 'delete-modal',
             okText: 'Delete',
             cancelText: 'Cancel',
           },
