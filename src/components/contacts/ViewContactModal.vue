@@ -128,10 +128,17 @@ export default Vue.extend({
 
         this.close();
 
-        // @ts-ignore
-        this.deleteContact(this.contact);
+        try {
+          // @ts-ignore
+          await this.deleteContact(this.contact);
+        } catch (e) {
+          this.$dialog.alert({
+            title: 'Network error',
+            body:
+              'It was not possible to delete the contact. Please try again later.',
+          });
+        }
       } catch (e) {
-        console.log(e);
         // ignore cancel
       }
     },

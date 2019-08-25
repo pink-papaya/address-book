@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { ActionTree } from 'vuex';
 import { RootState } from '@/store/types';
 import { Contact, ContactsState } from '@/store/contacts/types';
@@ -29,8 +30,8 @@ const actions: ActionTree<ContactsState, RootState> = {
         id: undefined,
       });
     } catch (e) {
-      /* @todo: show error notification */
       dispatch('rollBackCreate', contact);
+      throw e;
     }
   },
 
@@ -55,8 +56,8 @@ const actions: ActionTree<ContactsState, RootState> = {
         },
       );
     } catch (e) {
-      /* @todo: show error notification */
       dispatch('rollBackUpdate', originalContact);
+      throw e;
     }
   },
 
@@ -78,16 +79,14 @@ const actions: ActionTree<ContactsState, RootState> = {
     } catch (e) {
       /* @todo: show error notification */
       dispatch('rollBackDelete', contact);
+      throw e;
     }
   },
 
   async rollBackDelete({ commit }, originalContact: Contact) {
     await (await db).put('contacts', originalContact);
 
-    commit('deleteContact', {
-      id: originalContact.id,
-      contact: originalContact,
-    });
+    commit('addContact', originalContact);
   },
 
   async storeContacts({ commit, dispatch }, contacts: Contact[]) {

@@ -198,7 +198,11 @@ export default Vue.extend({
         // @ts-ignore
         await this.saveContact(contact);
       } catch (e) {
-        console.log(e);
+        this.$dialog.alert({
+          title: 'Network error',
+          body:
+            'It was not possible to save the contact. Please try again later.',
+        });
       }
     },
   },
