@@ -4,7 +4,7 @@
     :class="{ 'app__create-contact-button--offline': !networkOnLine }"
     type="button"
     class="app__create-contact-button app__button app__button--outline"
-    @click="showCreateContactModal"
+    @click="showModal"
   >
     <span class="flex items-center justify-center">
       <img
@@ -29,11 +29,22 @@ export default Vue.extend({
   computed: {
     ...mapState('app', ['networkOnLine']),
     buttonLabel() {
+      // @ts-ignore
       return this.networkOnLine ? 'Create contact' : 'Offline';
     },
   },
 
-  methods: mapActions('modals', ['showCreateContactModal']),
+  methods: {
+    ...mapActions('modals', ['showCreateContactModal']),
+    ...mapActions('contacts/form', ['clearContact']),
+
+    showModal() {
+      // @ts-ignore
+      this.clearContact();
+      // @ts-ignore
+      this.showCreateContactModal();
+    },
+  },
 });
 </script>
 

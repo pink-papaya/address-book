@@ -13,6 +13,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vuelidate from 'vuelidate';
+import VuejsDialog from 'vuejs-dialog';
+import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
@@ -34,6 +36,9 @@ library.add(faTrash);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(Vuelidate);
+Vue.use(VuejsDialog as any, {
+  animation: 'fade',
+});
 
 Vue.config.productionTip = false;
 

@@ -24,6 +24,9 @@ const actions: ActionTree<ModalsState, RootState> = {
     storeHistoryKey(editContactHistoryKey);
   },
   hideCreateContactModal({ commit }) {
+    // mutation will be called twice
+    // once here and another in the popstate handler
+    // @todo confirm if this commit is necessary here
     commit('setIsCreateContactModalOpen', false);
     router.go(-1);
   },

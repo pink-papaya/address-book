@@ -7,7 +7,7 @@ const mutations: MutationTree<ContactsState> = {
     Vue.set(state.contacts, contact.id!, contact);
   },
   deleteContact(state, contact: Contact) {
-    Vue.delete(state.contacts, contact.name);
+    Vue.delete(state.contacts, contact.id!);
   },
   updateContact(state, { id, contact }: { id: number; contact: Contact }) {
     state.contacts[id] = contact;

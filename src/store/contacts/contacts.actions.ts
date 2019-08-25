@@ -35,7 +35,7 @@ const actions: ActionTree<ContactsState, RootState> = {
   },
 
   async rollBackCreate({ commit }, contact: Contact) {
-    await (await db).delete('contacts', contact.name);
+    await (await db).delete('contacts', contact.id);
     commit('deleteContact', contact);
   },
 
@@ -64,6 +64,27 @@ const actions: ActionTree<ContactsState, RootState> = {
     await (await db).put('contacts', originalContact);
 
     commit('updateContact', {
+      id: originalContact.id,
+      contact: originalContact,
+    });
+  },
+
+  async deleteContact({ commit, dispatch, getters, rootGetters }, contact) {
+    await (await db).delete('contacts', contact.id);
+    commit('deleteContact', contact);
+
+    try {
+      await contactService.delete(rootGetters['auth/addressBookId'], contact);
+    } catch (e) {
+      /* @todo: show error notification */
+      dispatch('rollBackDelete', contact);
+    }
+  },
+
+  async rollBackDelete({ commit }, originalContact: Contact) {
+    await (await db).put('contacts', originalContact);
+
+    commit('deleteContact', {
       id: originalContact.id,
       contact: originalContact,
     });

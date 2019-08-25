@@ -42,7 +42,7 @@
       <button
         class="app__button app__button--sm app__button--outline mr-5"
         type="button"
-        @click="deleteContact"
+        @click="showDeleteConfirmation"
       >
         Delete
       </button>
@@ -102,7 +102,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions('modals', ['hideViewContactModal', 'showCreateContactModal']),
-    ...mapActions('contacts', ['addContact']),
+    ...mapActions('contacts', ['addContact', 'deleteContact']),
 
     close() {
       // @ts-ignore
@@ -115,7 +115,24 @@ export default Vue.extend({
       this.showCreateContactModal(this.contact);
     },
 
-    deleteContact() {
+    async showDeleteConfirmation() {
+      try {
+        await this.$dialog.confirm(
+          'Are you sure you want to delete this contact?',
+          {
+            okText: 'Delete',
+            cancelText: 'Cancel',
+          },
+        );
+
+        this.close();
+
+        // @ts-ignore
+        this.deleteContact(this.contact);
+      } catch (e) {
+        console.log(e);
+        // ignore cancel
+      }
     },
   },
 });
