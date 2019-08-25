@@ -1,6 +1,6 @@
 <template>
   <app-modal
-    v-show="isCreateContactModalOpen"
+    v-if="isCreateContactModalOpen"
     mobile-full-screen
     @close="close"
   >
@@ -12,9 +12,7 @@
 
     <template #body>
       <form id="create-contact-form" class="w-full" @submit.prevent="save">
-        <!-- v-if is needed here or else v-select may not load the value correctly -->
         <app-select
-          v-if="isCreateContactModalOpen"
           v-model="$v.groupId.$model"
           :has-error="$v.groupId.$error"
           :options="groups"
@@ -90,8 +88,11 @@ import AppImgLoader from '@/components/AppImgLoader.vue';
 import * as groupImgPlaceholder from '@/assets/img/group-default-photo.png';
 
 const uniqueName = (value: string, vm: any) => {
-  const contact = vm.contactByName(value);
+  if (!value) {
+    return true;
+  }
 
+  const contact = vm.contactByName(value);
   // the contact can have it's original name
   return !contact || contact.id === vm.contact.id;
 };
