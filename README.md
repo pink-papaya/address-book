@@ -12,6 +12,8 @@ Features:
   * Create
   * Update
   * Delete
+  * Search by name, phone or group
+  * Filtering by group
 - Group management
   * Create
   * Update
