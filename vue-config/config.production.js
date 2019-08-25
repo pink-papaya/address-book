@@ -1,7 +1,7 @@
 const path = require('path');
 const PrerenderSPAPlugin = require('prerender-spa-plugin'); // eslint-disable-line
 
-const prerenderedRoutesList = ['/login', '/', '/signup'];
+const prerenderedRoutesList = ['/login', '/signup'];
 
 module.exports = {
   configureWebpack: {

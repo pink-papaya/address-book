@@ -70,12 +70,12 @@
 }
 
 .dg-content-cont--floating {
-  top: 50%;
+  top: calc(50% - 85px);
 }
 
 .dg-btn--ok,
 .dg-btn--cancel {
-  @apply border-purple-900  bg-purple-900 text-white;
+  @apply border-purple-900 bg-purple-900 text-white;
 
   &:hover {
     @apply bg-purple-800 border-purple-800;
