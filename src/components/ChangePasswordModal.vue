@@ -121,14 +121,14 @@ export default Vue.extend({
     },
 
     async saveNewPassword() {
-      this.isLoading = true;
-
       // @ts-ignore
       this.$v.$touch();
 
       if (this.$v.$invalid) {
         return;
       }
+
+      this.isLoading = true;
 
       try {
         // @ts-ignore

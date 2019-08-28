@@ -132,14 +132,14 @@ export default Vue.extend({
     },
 
     async createGroup() {
-      this.isSaving = true;
-
       // @ts-ignore
       this.$v.$touch();
 
       if (this.$v.$invalid) {
         return;
       }
+
+      this.isSaving = true;
 
       // @ts-ignore
       const group = { ...this.group };

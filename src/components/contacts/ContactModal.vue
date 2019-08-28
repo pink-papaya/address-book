@@ -185,14 +185,14 @@ export default Vue.extend({
     },
 
     async save() {
-      this.isSaving = true;
-
       // @ts-ignore
       this.$v.$touch();
 
       if (this.$v.$invalid) {
         return;
       }
+
+      this.isSaving = true;
 
       // @ts-ignore
       const contact = { ...this.contact };
